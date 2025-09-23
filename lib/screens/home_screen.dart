@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/widgets/custom_elevated_button.dart';
+import 'package:hero_location/widgets/empty_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static String routeName = '/home';
@@ -7,12 +10,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset(
-          'assets/images/empty_ghost.gif',
-          width: double.infinity,
-        ),
+      appBar: AppBar(
+        title: Text('My clints'),
+        backgroundColor: AppColors.primryColor,
+        centerTitle: true,
       ),
+      body: EmptyHomeScreen(),
     );
   }
 }
