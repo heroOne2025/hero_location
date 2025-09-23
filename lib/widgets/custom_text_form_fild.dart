@@ -6,13 +6,15 @@ class CustomTextFormFiled extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.labelText,
+    this.keyboardType,
   });
   final String hintText;
   final String labelText;
-
+  final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: hintText,
         floatingLabelStyle: TextStyle(color: AppColors.primryColor),
