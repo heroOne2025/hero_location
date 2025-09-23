@@ -6,6 +6,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Image.asset(
+          'assets/images/empty_ghost.gif',
+          width: double.infinity,
+        ),
+      ),
+    );
   }
 }

@@ -7,14 +7,17 @@ class CustomTextFormFiled extends StatelessWidget {
     required this.hintText,
     required this.labelText,
     this.keyboardType,
+    this.obscureText,
   });
   final String hintText;
   final String labelText;
   final TextInputType? keyboardType;
+  final bool? obscureText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.text,
+      obscureText: obscureText ?? false,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
         floatingLabelStyle: TextStyle(color: AppColors.primryColor),

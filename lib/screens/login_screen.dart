@@ -45,6 +45,7 @@ class LoginScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your email',
                 labelText: 'Email',
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 16.0),
               Text('Password'),
@@ -52,6 +53,8 @@ class LoginScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your password',
                 labelText: 'Password',
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
               ),
               CustomTextButton(
                 textButtonText: 'Forget Password?',

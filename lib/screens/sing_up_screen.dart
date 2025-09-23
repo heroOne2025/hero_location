@@ -44,6 +44,7 @@ class SingUpScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your Name',
                 labelText: 'Name',
+                keyboardType: TextInputType.name,
               ),
               SizedBox(height: 16.0),
               Text('Email'),
@@ -51,6 +52,7 @@ class SingUpScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your Email',
                 labelText: 'Email',
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 16.0),
 
@@ -67,6 +69,7 @@ class SingUpScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your password',
                 labelText: 'Password',
+                obscureText: true,
               ),
               SizedBox(height: 16.0),
 
@@ -75,6 +78,7 @@ class SingUpScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your password',
                 labelText: 'Password',
+                obscureText: true,
               ),
               SizedBox(height: 24.0),
               CustomElevatedButton(

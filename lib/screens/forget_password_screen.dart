@@ -48,6 +48,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               CustomTextFormFiled(
                 hintText: 'Enter your email',
                 labelText: 'Email',
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 30.0),
               CustomElevatedButton(
