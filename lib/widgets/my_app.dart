@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/screens/login_screen.dart';
 import 'package:hero_location/screens/sing_up_screen.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.routeName,
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
+        ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
         SingUpScreen.routeName: (context) => SingUpScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
       },

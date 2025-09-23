@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/screens/sing_up_screen.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
@@ -54,7 +55,9 @@ class LoginScreen extends StatelessWidget {
               ),
               CustomTextButton(
                 textButtonText: 'Forget Password?',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
+                },
               ),
               SizedBox(height: 24.0),
               CustomElevatedButton(
