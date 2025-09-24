@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 
 class CustomTextFormFiled extends StatelessWidget {
@@ -18,9 +19,11 @@ class CustomTextFormFiled extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText ?? false,
       keyboardType: keyboardType,
+
       decoration: InputDecoration(
+        hintStyle: GoogleFonts.poppins(),
         hintText: hintText,
-        floatingLabelStyle: TextStyle(color: AppColors.primryColor),
+        floatingLabelStyle: GoogleFonts.poppins(color: AppColors.primryColor),
         labelText: labelText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),

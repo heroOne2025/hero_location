@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -16,7 +17,7 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         textButtonText,
-        style: TextStyle(color: AppColors.primryColor),
+        style: GoogleFonts.poppins(color: AppColors.primryColor),
       ),
     );
   }

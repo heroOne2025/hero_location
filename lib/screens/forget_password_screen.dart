@@ -42,7 +42,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 50.0),
-              Text('Email'),
+              Text('Email', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your email',

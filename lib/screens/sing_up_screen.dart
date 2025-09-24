@@ -40,7 +40,7 @@ class SingUpScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30.0),
-              Text('Name'),
+              Text('Name', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your Name',
@@ -48,7 +48,7 @@ class SingUpScreen extends StatelessWidget {
                 keyboardType: TextInputType.name,
               ),
               SizedBox(height: 16.0),
-              Text('Email'),
+              Text('Email', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your Email',
@@ -57,7 +57,7 @@ class SingUpScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
 
-              Text('phone'),
+              Text('phone', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter phone number',
@@ -65,7 +65,7 @@ class SingUpScreen extends StatelessWidget {
                 keyboardType: TextInputType.phone,
               ),
               SizedBox(height: 16.0),
-              Text('Password'),
+              Text('Password', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your password',
@@ -74,7 +74,7 @@ class SingUpScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
 
-              Text('Confirm Password'),
+              Text('Confirm Password', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your password',

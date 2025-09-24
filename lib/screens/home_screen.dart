@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 import 'package:hero_location/screens/tabs/home_tab.dart';
 import 'package:hero_location/screens/tabs/settings_tab.dart';
@@ -19,7 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedIndex == 0 ? 'Home' : 'Settings'),
+        title: Text(
+          selectedIndex == 0 ? 'Home' : 'Settings',
+          style: GoogleFonts.poppins(),
+        ),
         backgroundColor: AppColors.primryColor,
         centerTitle: true,
       ),

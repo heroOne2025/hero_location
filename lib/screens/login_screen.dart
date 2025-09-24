@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 50.0),
-              Text('Email'),
+              Text('Email', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your email',
@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 16.0),
-              Text('Password'),
+              Text('Password', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
               CustomTextFormFiled(
                 hintText: 'Enter your password',

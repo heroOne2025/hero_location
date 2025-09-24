@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/screens/Add_clint_location_screen.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 
@@ -22,7 +23,10 @@ class EmptyHomeScreen extends StatelessWidget {
           Text(
             'No clints yet',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 8.0),
           Padding(

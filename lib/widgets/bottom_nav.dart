@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 
 class BottomNav extends StatelessWidget {
@@ -14,6 +15,7 @@ class BottomNav extends StatelessWidget {
       currentIndex: selectedIndex,
       showSelectedLabels: true,
       showUnselectedLabels: false,
+      selectedLabelStyle: GoogleFonts.poppins(),
       onTap: onTap,
 
       items: const [

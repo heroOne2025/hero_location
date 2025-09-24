@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 import 'package:hero_location/widgets/custom_text_form_fild.dart';
 
@@ -12,7 +13,7 @@ class AddClintLocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Client Location'),
+        title: Text('Add Client Location', style: GoogleFonts.poppins()),
         backgroundColor: AppColors.primryColor,
         centerTitle: true,
       ),
