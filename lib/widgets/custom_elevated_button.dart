@@ -24,7 +24,7 @@ class CustomElevatedButton extends StatelessWidget {
       child: Text(
         textOnButton,
         style: GoogleFonts.poppins(
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

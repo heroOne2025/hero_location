@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_location/screens/Add_clint_location_screen.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 
 class EmptyHomeScreen extends StatelessWidget {
@@ -28,7 +29,9 @@ class EmptyHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 100),
             child: CustomElevatedButton(
               textOnButton: 'Add clint',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AddClintLocationScreen.routeName);
+              },
             ),
           ),
         ],

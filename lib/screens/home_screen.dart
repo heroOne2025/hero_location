@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
-import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/empty_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {

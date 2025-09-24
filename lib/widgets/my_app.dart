@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_location/screens/Add_clint_location_screen.dart';
 import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/screens/login_screen.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
         SingUpScreen.routeName: (context) => SingUpScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        AddClintLocationScreen.routeName: (context) => AddClintLocationScreen(),
       },
     );
   }
