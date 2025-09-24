@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedIndex == 0 ? 'Home' : 'Profile'),
+        title: Text(selectedIndex == 0 ? 'Home' : 'Settings'),
         backgroundColor: AppColors.primryColor,
         centerTitle: true,
       ),

@@ -5,6 +5,6 @@ class SettingsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Center(child: Text('Profile Tab'))]);
+    return Column(children: [Center(child: Text('Settings Tab'))]);
   }
 }
