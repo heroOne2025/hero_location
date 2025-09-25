@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/core/utils/app_assets.dart';
+import 'package:hero_location/widgets/clicked_row.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
@@ -11,24 +12,13 @@ class SettingsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
+        spacing: 40,
         children: [
-          Container(
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage('assets/images/user_avatar.png'),
-                ),
-                Text(
-                  'Edit Profile ',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SizedBox(height: 50),
+          ClickedRow(avatar: AppAssets.profileAvatar, text: 'Edit Profile'),
+          ClickedRow(avatar: AppAssets.changePassword, text: 'Change Password'),
+          ClickedRow(avatar: AppAssets.changeLanguage, text: 'Change Language'),
+          ClickedRow(avatar: AppAssets.logout, text: 'Logout'),
         ],
       ),
     );
