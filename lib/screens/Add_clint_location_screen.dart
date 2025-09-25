@@ -18,6 +18,8 @@ class AddClintLocationScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -72,6 +74,7 @@ class AddClintLocationScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
