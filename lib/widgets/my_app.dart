@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_location/screens/Add_clint_location_screen.dart';
-import 'package:hero_location/screens/change_language_screen.dart';
+import 'package:hero_location/screens/app_language_screen.dart';
 import 'package:hero_location/screens/change_password_screen.dart';
 import 'package:hero_location/screens/edit_profile_screen.dart';
 import 'package:hero_location/screens/forget_password_screen.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         AddClintLocationScreen.routeName: (context) => AddClintLocationScreen(),
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
         ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
-        ChangeLanguageScreen.routeName: (context) => ChangeLanguageScreen(),
+        AppLanguage.routeName: (context) => AppLanguage(),
       },
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_location/core/utils/app_assets.dart';
-import 'package:hero_location/screens/change_language_screen.dart';
+import 'package:hero_location/screens/app_language_screen.dart';
 import 'package:hero_location/screens/change_password_screen.dart';
 import 'package:hero_location/screens/edit_profile_screen.dart';
 import 'package:hero_location/widgets/clicked_row.dart';
@@ -34,9 +34,9 @@ class SettingsTab extends StatelessWidget {
           ),
           ClickedRow(
             avatar: AppAssets.changeLanguage,
-            text: 'Change Language',
+            text: 'App Language',
             onTap: () {
-              Navigator.pushNamed(context, ChangeLanguageScreen.routeName);
+              Navigator.pushNamed(context, AppLanguage.routeName);
             },
           ),
           ClickedRow(avatar: AppAssets.logout, text: 'Logout'),
