@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/core/utils/app_colors.dart';
 
 class AppLanguage extends StatefulWidget {
   static const routeName = '/app-language';
@@ -37,20 +38,20 @@ class _AppLanguageState extends State<AppLanguage> {
               child: Column(
                 children: [
                   RadioListTile<String>(
+                    activeColor: AppColors.primryColor,
                     value: 'English',
-                    title: const Text('English'),
+                    title: Text('English', style: GoogleFonts.poppins()),
                     selected: language == 'English',
                   ),
                   RadioListTile<String>(
+                    activeColor: AppColors.primryColor,
                     value: 'Arabic',
-                    title: const Text('Arabic'),
+                    title: Text('Arabic', style: GoogleFonts.poppins()),
                     selected: language == 'Arabic',
                   ),
                 ],
               ),
             ),
-
-            const SizedBox(height: 20),
           ],
         ),
       ),
