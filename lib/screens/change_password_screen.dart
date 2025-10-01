@@ -55,7 +55,7 @@ class ChangePasswordScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100.0),
+                padding: const EdgeInsets.symmetric(horizontal: 80.0),
                 child: CustomElevatedButton(
                   textOnButton: "Change Password",
                   onPressed: () {},
