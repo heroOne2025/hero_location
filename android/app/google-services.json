@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "482881915289",
+    "project_id": "hero-location-4b362",
+    "storage_bucket": "hero-location-4b362.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482881915289:android:08556a048a1e887ac4eb08",
+        "android_client_info": {
+          "package_name": "com.example.hero_location"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1XPh0OJ-kBWc5XYB7Vw9wwj7Av5w6kR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
