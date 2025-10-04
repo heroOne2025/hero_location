@@ -9,18 +9,29 @@ class CustomTextFormFiled extends StatelessWidget {
     required this.labelText,
     this.keyboardType,
     this.obscureText,
+    this.validator,
+    this.onChanged,
+    this.controller,
+    this.suffixIcon,
   });
   final String hintText;
   final String labelText;
   final TextInputType? keyboardType;
   final bool? obscureText;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final TextEditingController? controller;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscureText ?? false,
       keyboardType: keyboardType,
-
+      validator: validator,
+      onChanged: onChanged,
+      controller: controller,
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         hintStyle: GoogleFonts.poppins(),
         hintText: hintText,
         floatingLabelStyle: GoogleFonts.poppins(color: AppColors.primryColor),
