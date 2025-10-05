@@ -3,6 +3,8 @@ import 'package:hero_location/core/utils/app_assets.dart';
 import 'package:hero_location/screens/app_language_screen.dart';
 import 'package:hero_location/screens/change_password_screen.dart';
 import 'package:hero_location/screens/edit_profile_screen.dart';
+import 'package:hero_location/screens/login_screen.dart';
+import 'package:hero_location/services/auth.dart';
 import 'package:hero_location/widgets/clicked_row.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -39,7 +41,14 @@ class SettingsTab extends StatelessWidget {
               Navigator.pushNamed(context, AppLanguage.routeName);
             },
           ),
-          ClickedRow(avatar: AppAssets.logout, text: 'Logout'),
+          ClickedRow(
+            avatar: AppAssets.logout,
+            text: 'Logout',
+            onTap: () {
+              Auth.signOut();
+              Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+            },
+          ),
         ],
       ),
     );
