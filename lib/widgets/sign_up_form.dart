@@ -4,10 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
-import 'package:hero_location/helper/helper_fun.dart';
-import 'package:hero_location/helper/show_snack_bar.dart';
 import 'package:hero_location/screens/home_screen.dart';
-import 'package:hero_location/services/auth.dart';
+import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
 
@@ -41,6 +39,68 @@ class _SignUpFormState extends State<SignUpForm> {
     super.dispose();
   }
 
+  Future<void> _signUp() async {
+    if (formKey.currentState!.validate()) {
+      setState(() => isLoading = true);
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text,
+            );
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Sign-up successful')));
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeScreen.routeName,
+            (route) => false,
+          );
+          FirestoreService.addUser(
+            uid: userCredential.user!.uid,
+            name: nameController.text,
+            email: emailController.text,
+            phone: phoneController.text,
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        if (mounted) {
+          String errorMessage;
+          switch (e.code) {
+            case 'weak-password':
+              errorMessage = 'The password provided is too weak.';
+              break;
+            case 'email-already-in-use':
+              errorMessage = 'An account already exists for that email.';
+              break;
+            case 'invalid-email':
+              errorMessage = 'Invalid email format.';
+              break;
+            case 'operation-not-allowed':
+              errorMessage = 'Email/password sign-up is disabled.';
+              break;
+            default:
+              errorMessage = 'An error occurred: ${e.message}';
+          }
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(errorMessage)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Unexpected error: $e')));
+        }
+      } finally {
+        if (mounted) setState(() => isLoading = false);
+      }
+    } else {
+      setState(() => autovalidateMode = AutovalidateMode.always);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -70,9 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
             labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
             controller: emailController,
-            onChanged: (value) {
-              emailController.text = value;
-            },
+
             validator: (value) => AppValidator.validateEmail(value),
           ),
           SizedBox(height: 16.0),
@@ -84,9 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
             labelText: 'Phone',
             keyboardType: TextInputType.phone,
             controller: phoneController,
-            onChanged: (value) {
-              phoneController.text = value;
-            },
+
             validator: (value) => AppValidator.validatePhone(value),
           ),
           SizedBox(height: 16.0),
@@ -136,40 +192,19 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           SizedBox(height: 24.0),
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : CustomElevatedButton(
-                  textOnButton: 'Sign Up',
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      setState(() => isLoading = true);
-                      try {
-                        await Auth.signUp(
-                          emailController.text,
-                          passwordController.text,
-                        );
-
-                        if (context.mounted) {
-                          showSnackBar(context, "Account created successfully");
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            HomeScreen.routeName,
-                            (route) => false,
-                          );
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (context.mounted) signUpCheck(e, context);
-                      } catch (e) {
-                        log(e.toString());
-                      } finally {
-                        if (mounted) setState(() => isLoading = false);
-                      }
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
-                ),
+          CustomElevatedButton(
+            onPressed: isLoading ? null : _signUp,
+            child: isLoading
+                ? const CircularProgressIndicator(color: Colors.white)
+                : Text(
+                    'SignUp',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+          ),
         ],
       ),
     );
