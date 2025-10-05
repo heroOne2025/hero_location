@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 
-class CustomTextFormFiled extends StatelessWidget {
-  const CustomTextFormFiled({
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
     super.key,
     required this.hintText,
     required this.labelText,
@@ -30,8 +30,10 @@ class CustomTextFormFiled extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
+
         hintStyle: GoogleFonts.poppins(),
         hintText: hintText,
         floatingLabelStyle: GoogleFonts.poppins(color: AppColors.primryColor),

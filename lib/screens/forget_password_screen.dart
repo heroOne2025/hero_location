@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_assets.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
-import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
-import 'package:hero_location/widgets/custom_text_form_fild.dart';
+import 'package:hero_location/widgets/custom_text_form_field.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   static String routeName = '/forget_password';
@@ -44,7 +43,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               SizedBox(height: 50.0),
               Text('Email', style: GoogleFonts.poppins()),
               SizedBox(height: 8.0),
-              CustomTextFormFiled(
+              CustomTextFormField(
                 hintText: 'Enter your email',
                 labelText: 'Email',
                 keyboardType: TextInputType.emailAddress,
@@ -53,7 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               CustomElevatedButton(
                 textOnButton: 'Send',
                 onPressed: () {
-                  Navigator.pushNamed(context, HomeScreen.routeName);
+                  //Navigator.pushNamed(context, HomeScreen.routeName);
                 },
               ),
             ],

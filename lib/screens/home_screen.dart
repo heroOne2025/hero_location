@@ -6,7 +6,7 @@ import 'package:hero_location/screens/tabs/settings_tab.dart';
 import 'package:hero_location/widgets/bottom_nav.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = '/home';
+  static String routeName = 'home';
   const HomeScreen({super.key});
 
   @override

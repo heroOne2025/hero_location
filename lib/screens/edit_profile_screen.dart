@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
-import 'package:hero_location/widgets/custom_text_form_fild.dart';
+import 'package:hero_location/widgets/custom_text_form_field.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static const routeName = '/edit-profile';
@@ -29,7 +29,7 @@ class EditProfileScreen extends StatelessWidget {
               const SizedBox(height: 40),
               Text('Name', style: GoogleFonts.poppins()),
               SizedBox(height: 8),
-              CustomTextFormFiled(
+              CustomTextFormField(
                 hintText: 'Name',
                 labelText: 'name',
                 keyboardType: TextInputType.streetAddress,
@@ -37,7 +37,7 @@ class EditProfileScreen extends StatelessWidget {
               SizedBox(height: 8),
               Text('Email', style: GoogleFonts.poppins()),
               SizedBox(height: 8),
-              CustomTextFormFiled(
+              CustomTextFormField(
                 hintText: 'email',
                 labelText: 'Email',
                 keyboardType: TextInputType.emailAddress,
@@ -45,7 +45,7 @@ class EditProfileScreen extends StatelessWidget {
               SizedBox(height: 16),
               Text('Phone Number', style: GoogleFonts.poppins()),
               SizedBox(height: 8),
-              CustomTextFormFiled(
+              CustomTextFormField(
                 hintText: 'phone number',
                 labelText: 'Phone Number',
                 keyboardType: TextInputType.phone,

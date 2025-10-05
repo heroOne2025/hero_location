@@ -1,52 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hero_location/screens/sign_up_screen.dart';
 import 'package:hero_location/widgets/custom_text_button.dart';
-import 'package:hero_location/widgets/login_form.dart';
+import 'package:hero_location/widgets/sign_up_form.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String routeName = 'login';
-  const LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  static String routeName = 'sign_up';
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 100.0),
+              SizedBox(height: 70.0),
               Center(
                 child: Text(
-                  "Wolcome",
+                  "create an account",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                   ),
                 ),
               ),
-              SizedBox(height: 80.0),
+              SizedBox(height: 30.0),
               Text(
-                'Login',
+                'Sign Up',
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 50.0),
-              LoginForm(),
+              SizedBox(height: 30.0),
+              SignUpForm(),
               SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?", style: GoogleFonts.poppins()),
+                  Text(
+                    "Already have an account?",
+                    style: GoogleFonts.poppins(),
+                  ),
                   CustomTextButton(
-                    textButtonText: 'Sing Up',
+                    textButtonText: 'Login',
                     onPressed: () {
-                      Navigator.pushNamed(context, SignUpScreen.routeName);
+                      Navigator.pop(context);
                     },
                   ),
                 ],

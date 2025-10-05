@@ -6,7 +6,7 @@ import 'package:hero_location/screens/edit_profile_screen.dart';
 import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/screens/login_screen.dart';
-import 'package:hero_location/screens/sing_up_screen.dart';
+import 'package:hero_location/screens/sign_up_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,12 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(),
+
       initialRoute: LoginScreen.routeName,
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
         ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
-        SingUpScreen.routeName: (context) => SingUpScreen(),
+        SignUpScreen.routeName: (context) => SignUpScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
         AddClintLocationScreen.routeName: (context) => AddClintLocationScreen(),
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
