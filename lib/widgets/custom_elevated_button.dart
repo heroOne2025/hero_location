@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     super.key,
-    required this.textOnButton,
+    this.textOnButton,
     this.onPressed,
+    this.child,
   });
-  final String textOnButton;
+  final String? textOnButton;
   final void Function()? onPressed;
-
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -21,14 +22,16 @@ class CustomElevatedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(40.0),
         ),
       ),
-      child: Text(
-        textOnButton,
-        style: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
+      child:
+          child ??
+          Text(
+            textOnButton ?? '',
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
     );
   }
 }

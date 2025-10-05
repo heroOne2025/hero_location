@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hero_location/screens/Add_clint_location_screen.dart';
 import 'package:hero_location/screens/app_language_screen.dart';
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      initialRoute: LoginScreen.routeName,
+      initialRoute: FirebaseAuth.instance.currentUser == null
+          ? LoginScreen.routeName
+          : HomeScreen.routeName,
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
         ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
