@@ -1,7 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/services/firestore_service.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AddClintLocationForm extends StatefulWidget {
   const AddClintLocationForm({super.key});
@@ -13,10 +21,130 @@ class AddClintLocationForm extends StatefulWidget {
 class _AddClintLocationFormState extends State<AddClintLocationForm> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController adressController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  bool isLoading = false;
+
+  LatLng? currentLocation;
+  bool isLocationFetched = false;
+  bool isFetchingLocation = false;
+  bool isSavingClient = false;
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> fetchCurrentLocation() async {
+    if (isLocationFetched) return;
+
+    setState(() => isFetchingLocation = true);
+
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showSnackBar("Location services are disabled");
+      setState(() => isFetchingLocation = false);
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        showSnackBar("Location permission denied");
+        setState(() => isFetchingLocation = false);
+        return;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      showSnackBar("Location permission permanently denied");
+      setState(() => isFetchingLocation = false);
+      return;
+    }
+
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.best,
+      distanceFilter: 10,
+    );
+
+    Position pos = await Geolocator.getCurrentPosition(
+      locationSettings: locationSettings,
+    );
+
+    setState(() {
+      currentLocation = LatLng(pos.latitude, pos.longitude);
+      isLocationFetched = true;
+      isFetchingLocation = false;
+    });
+  }
+
+  Future<void> openGoogleMaps() async {
+    if (currentLocation != null) {
+      final url = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude},${currentLocation!.longitude}',
+      );
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        showSnackBar("Could not open Google Maps");
+      }
+    }
+  }
+
+  Future<void> addClient() async {
+    if (!formKey.currentState!.validate()) {
+      setState(() => autovalidateMode = AutovalidateMode.always);
+      return;
+    }
+
+    if (currentLocation == null) {
+      showSnackBar("Please get current location first");
+      return;
+    }
+
+    setState(() => isSavingClient = true);
+
+    try {
+      await FirestoreService.addCustomer(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        address: addressController.text.trim(),
+        location: GeoPoint(
+          currentLocation!.latitude,
+          currentLocation!.longitude,
+        ),
+        agentId: FirebaseAuth.instance.currentUser!.uid,
+        createdBy: FirebaseAuth.instance.currentUser!.email!,
+      );
+      // FirebaseFirestore.instance.collection('customers').add({
+      //   'name': nameController.text.trim(),
+      //   'phone': phoneController.text.trim(),
+      //   'address': addressController.text.trim(),
+      //   'location': GeoPoint(
+      //     currentLocation!.latitude,
+      //     currentLocation!.longitude,
+      //   ),
+      //   'agentId': FirebaseAuth.instance.currentUser!.email,
+      // 'createdAt': FieldValue.serverTimestamp(),
+      // });
+      Navigator.pop(context);
+      showSnackBar("Client added successfully");
+
+      // تفريغ الفورم
+      nameController.clear();
+      phoneController.clear();
+      addressController.clear();
+      setState(() {
+        currentLocation = null;
+        isLocationFetched = false;
+      });
+    } catch (e) {
+      showSnackBar("Error: $e");
+    } finally {
+      setState(() => isSavingClient = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +152,66 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
       key: formKey,
       autovalidateMode: autovalidateMode,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             margin: const EdgeInsets.all(30),
             height: 175,
-            width: 100,
             color: Colors.grey[400],
-            child: const Center(
-              child: Icon(Icons.map, size: 50, color: Colors.white),
-            ),
+            child: currentLocation == null
+                ? const Center(
+                    child: Icon(Icons.map, size: 50, color: Colors.white),
+                  )
+                : FlutterMap(
+                    options: MapOptions(
+                      initialCenter: currentLocation!,
+                      initialZoom: 16.0,
+                      interactionOptions: InteractionOptions(
+                        flags: InteractiveFlag.none,
+                      ),
+                      // غير قابل للسحب
+                    ),
+                    children: [
+                      InkWell(
+                        onTap: openGoogleMaps,
+                        child: TileLayer(
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.example.hero_location',
+                        ),
+                      ),
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            child: const Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                            width: 80,
+                            height: 80,
+                            point: currentLocation!,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
             child: CustomElevatedButton(
-              textOnButton: 'Get Current Location',
-              onPressed: () {},
+              onPressed: isFetchingLocation ? null : fetchCurrentLocation,
+              child: isFetchingLocation
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : Text(
+                      'Get Current Location',
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ),
             ),
           ),
           const SizedBox(height: 20),
-          Text('name'),
-          SizedBox(height: 8),
+          Text('Name'),
+          const SizedBox(height: 8),
           CustomTextFormField(
             hintText: "Clint Name",
             labelText: 'name',
@@ -53,9 +219,9 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
             controller: nameController,
             validator: (value) => AppValidator.validateName(value),
           ),
-          SizedBox(height: 10),
-          Text('phone'),
-          SizedBox(height: 8),
+          const SizedBox(height: 10),
+          Text('Phone'),
+          const SizedBox(height: 8),
           CustomTextFormField(
             hintText: "Clint Phone",
             labelText: 'phone',
@@ -63,32 +229,30 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
             controller: phoneController,
             validator: (value) => AppValidator.validatePhone(value),
           ),
-          SizedBox(height: 10),
-          Text('address'),
-          SizedBox(height: 8),
+          const SizedBox(height: 10),
+          Text('Address'),
+          const SizedBox(height: 8),
           CustomTextFormField(
             hintText: "Clint Address",
             labelText: 'address',
             keyboardType: TextInputType.streetAddress,
+            controller: addressController,
             validator: (value) => AppValidator.validateAddress(value),
-            controller: adressController,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
             child: CustomElevatedButton(
-              textOnButton: 'Add Clint',
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                } else {
-                  setState(() {
-                    autovalidateMode = AutovalidateMode.always;
-                  });
-                }
-              },
+              onPressed: isSavingClient ? null : addClient,
+              child: isSavingClient
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : Text(
+                      'Add Client',
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );

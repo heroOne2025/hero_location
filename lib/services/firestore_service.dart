@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -32,11 +33,13 @@ class FirestoreService {
   static Future<void> addCustomer({
     required String name,
     required String phone,
+    required String address,
     required GeoPoint location,
     required String agentId,
     required String createdBy, // uid اللي أضاف العميل (مندوب أو أدمن)
   }) async {
-    await _db.collection('customers').add({
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    await _db.collection('users').doc(uid).collection('customers').add({
       'name': name,
       'phone': phone,
       'location': location,
