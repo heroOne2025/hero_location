@@ -52,4 +52,18 @@ class AppValidator {
     }
     return null;
   }
+
+  static String? validateAddress(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter the address';
+    } else if (value.trim().length < 5) {
+      return 'Address must be at least 5 characters long';
+    } else if (!RegExp(
+      r'^[\p{L}0-9\s,.\-\/]+$',
+      unicode: true,
+    ).hasMatch(value.trim())) {
+      return 'Address contains invalid characters';
+    }
+    return null;
+  }
 }

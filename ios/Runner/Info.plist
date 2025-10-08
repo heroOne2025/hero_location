@@ -47,5 +47,11 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+<string>نحتاج للوصول إلى موقعك لعرضه في التطبيق</string>
+
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>التطبيق يحتاج للوصول إلى موقعك حتى نتمكن من تحديد مكان العميل</string>
+
 	</dict>
 </plist>
