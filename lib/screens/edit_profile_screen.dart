@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/core/utils/app_colors.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
@@ -95,7 +96,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Profile', style: GoogleFonts.poppins())),
+      appBar: AppBar(
+        title: Text('Edit Profile', style: GoogleFonts.poppins()),
+        backgroundColor: AppColors.primryColor,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
