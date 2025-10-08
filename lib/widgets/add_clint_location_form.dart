@@ -115,7 +115,6 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
           currentLocation!.longitude,
         ),
         agentId: FirebaseAuth.instance.currentUser!.uid,
-        createdBy: FirebaseAuth.instance.currentUser!.email!,
       );
       // FirebaseFirestore.instance.collection('customers').add({
       //   'name': nameController.text.trim(),
@@ -164,6 +163,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
                   )
                 : FlutterMap(
                     options: MapOptions(
+                      onTap: (tapPosition, point) => openGoogleMaps(),
                       initialCenter: currentLocation!,
                       initialZoom: 16.0,
                       interactionOptions: InteractionOptions(
@@ -172,13 +172,10 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
                       // غير قابل للسحب
                     ),
                     children: [
-                      InkWell(
-                        onTap: openGoogleMaps,
-                        child: TileLayer(
-                          urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName: 'com.example.hero_location',
-                        ),
+                      TileLayer(
+                        urlTemplate:
+                            'https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}.jpg?key=pP5dm4nw5yGr5Yosmn2z',
+                        userAgentPackageName: 'com.example.hero_location',
                       ),
                       MarkerLayer(
                         markers: [

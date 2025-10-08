@@ -29,15 +29,6 @@ class EmptyHomeScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100),
-            child: CustomElevatedButton(
-              textOnButton: 'Add clint',
-              onPressed: () {
-                Navigator.pushNamed(context, AddClintLocationScreen.routeName);
-              },
-            ),
-          ),
         ],
       ),
     );
