@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hero_location/screens/Add_clint_location_screen.dart';
-import 'package:hero_location/widgets/custom_elevated_button.dart';
 
 class EmptyHomeScreen extends StatelessWidget {
   const EmptyHomeScreen({super.key});
