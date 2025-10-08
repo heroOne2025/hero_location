@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hero_location/screens/Add_clint_location_screen.dart';
 import 'package:hero_location/screens/app_language_screen.dart';
 import 'package:hero_location/screens/change_password_screen.dart';
+import 'package:hero_location/screens/client_details_screen.dart';
 import 'package:hero_location/screens/edit_profile_screen.dart';
 import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
         ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
         AppLanguage.routeName: (context) => AppLanguage(),
+
+        ClientDetailsScreen.routeName: (context) {
+          final clientId =
+              ModalRoute.of(context)!.settings.arguments as String?;
+          return ClientDetailsScreen(clientId: clientId!);
+        },
       },
     );
   }
