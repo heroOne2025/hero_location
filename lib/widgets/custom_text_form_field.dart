@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.suffixIcon,
+    this.enabled,
   });
   final String hintText;
   final String labelText;
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? obscureText;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final bool? enabled;
   final TextEditingController? controller;
   final Widget? suffixIcon;
   @override
@@ -29,7 +31,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       onChanged: onChanged,
-
+      enabled: enabled,
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
