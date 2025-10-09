@@ -4,8 +4,8 @@ class AppValidator {
       return 'Please enter your name';
     } else if (value.trim().length < 3) {
       return 'Name must be at least 3 characters long';
-    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
-      return 'Name can only contain letters';
+    } else if (!RegExp(r'^[\p{L}\s]+$', unicode: true).hasMatch(value.trim())) {
+      return 'Name can only contain letters and spaces';
     }
     return null;
   }
