@@ -52,6 +52,8 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
           .doc(customerId)
           .delete();
 
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Client deleted successfully'),
@@ -60,6 +62,8 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
             label: 'Undo',
             textColor: Colors.white,
             onPressed: () async {
+              if (!mounted) return;
+
               try {
                 await FirebaseFirestore.instance
                     .collection('users')
@@ -67,24 +71,29 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                     .collection('customers')
                     .doc(customerId)
                     .set(customerData);
-                // 👈 إضافة: تحديث الشاشة بعد الـ restore
-                setState(() {}); // يجبر الـ StreamBuilder يقرأ تاني
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Client restored')),
-                );
+                if (mounted) setState(() {});
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Client restored')),
+                  );
+                }
               } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error restoring client: $e')),
-                );
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error restoring client: $e')),
+                  );
+                }
               }
             },
           ),
         ),
       );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error deleting client: $e')));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error deleting client: $e')));
+      }
     }
   }
 
@@ -161,10 +170,15 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                         name: customer['name'],
                         phone: customer['phone'],
                         onTap: () async {
-                          final result = await Navigator.pushNamed(
+                          // 👈 إصلاح: مرر agentId دائمًا (للـ admin أو agent)
+                          final result = await Navigator.push(
                             context,
-                            ClientDetailsScreen.routeName,
-                            arguments: customerId,
+                            MaterialPageRoute(
+                              builder: (_) => ClientDetailsScreen(
+                                clientId: customerId,
+                                agentId: widget.agentId, // 👈 مرر agentId هنا
+                              ),
+                            ),
                           );
 
                           if (result == true) {
