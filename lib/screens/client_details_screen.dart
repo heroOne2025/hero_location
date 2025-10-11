@@ -34,11 +34,16 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
   bool isSavingClient = false;
   bool isLoading = true;
 
+  String? currentUserRole;
+  Timestamp? createdAt;
+  bool isEditable = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadClientData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.wait([loadCurrentUserRole(), loadClientData()]);
+      _updateEditableStatus(); // 👈 تحديث نهائي بعد الاثنين
     });
   }
 
@@ -48,19 +53,47 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
+  Future<void> loadCurrentUserRole() async {
+    try {
+      final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUserId)
+          .get();
+      if (doc.exists) {
+        currentUserRole = doc.data()!['role'] ?? 'agent';
+      }
+    } catch (e) {
+      showSnackBar('Error loading user role: $e');
+    }
+  }
+
+  void _updateEditableStatus() {
+    if (currentUserRole == 'admin') {
+      isEditable = true; // 👈 Admin دائمًا يعدل
+    } else if (currentUserRole == 'agent' && createdAt != null) {
+      final now = DateTime.now();
+      final creationTime = createdAt!.toDate();
+      final difference = now.difference(creationTime);
+      isEditable =
+          difference < const Duration(hours: 12); // 👈 Agent خلال 12 ساعة بس
+    } else {
+      isEditable = false;
+    }
+    setState(() {});
+  }
+
   Future<void> loadClientData() async {
     setState(() => isLoading = true);
     try {
       final agentId = FirebaseAuth.instance.currentUser!.uid;
 
       final doc = await FirebaseFirestore.instance
-          .collection('users') // 👈 تم التغيير من 'agents' إلى 'users'
+          .collection('users')
           .doc(agentId)
           .collection('customers')
           .doc(widget.clientId)
           .get();
-
-      print('Client data: ${doc.data()}'); // 👈 للتحقق من الداتا
 
       if (doc.exists) {
         final data = doc.data()!;
@@ -68,10 +101,12 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
         phoneController.text = data['phone'] ?? '';
         addressController.text = data['address'] ?? '';
 
+        createdAt = data['createdAt']; // 👈 جلب وقت الإضافة
+
         if (data['location'] != null) {
           final geoPoint = data['location'] as GeoPoint;
           currentLocation = LatLng(geoPoint.latitude, geoPoint.longitude);
-          isLocationFetched = true; // 👈 تحديث حالة اللوكيشن
+          isLocationFetched = true;
         }
       } else {
         showSnackBar('Client not found');
@@ -84,6 +119,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
   }
 
   Future<void> fetchCurrentLocation() async {
+    if (!isEditable) return; // 👈 منع لو مش editable
+
     setState(() => isFetchingLocation = true);
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -124,6 +161,11 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
   }
 
   Future<void> saveClientData() async {
+    if (!isEditable) {
+      showSnackBar('You do not have permission to edit');
+      return;
+    }
+
     if (!formKey.currentState!.validate()) {
       setState(() => autovalidateMode = AutovalidateMode.always);
       return;
@@ -134,7 +176,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
       final agentId = FirebaseAuth.instance.currentUser!.uid;
 
       await FirebaseFirestore.instance
-          .collection('users') // 👈 تم التغيير من 'agents' إلى 'users'
+          .collection('users')
           .doc(agentId)
           .collection('customers')
           .doc(widget.clientId)
@@ -147,7 +189,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                 currentLocation!.latitude,
                 currentLocation!.longitude,
               ),
-            'updatedAt': FieldValue.serverTimestamp(), // 👈 إضافة لتحديث الوقت
+            'updatedAt': FieldValue.serverTimestamp(),
           });
 
       showSnackBar("Client updated successfully");
@@ -205,7 +247,9 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                       )
                     : FlutterMap(
                         options: MapOptions(
-                          onTap: (tap, point) => openGoogleMaps(),
+                          onTap: currentLocation != null
+                              ? (tap, point) => openGoogleMaps()
+                              : null, // 👈 يفتح للكل لو في لوكيشن
                           initialCenter: currentLocation!,
                           initialZoom: 16,
                           interactionOptions: const InteractionOptions(
@@ -235,18 +279,19 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                         ],
                       ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 80),
-                child: CustomElevatedButton(
-                  onPressed: isFetchingLocation ? null : fetchCurrentLocation,
-                  child: isFetchingLocation
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                          'Update Location',
-                          style: GoogleFonts.poppins(color: Colors.white),
-                        ),
+              if (isEditable)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 80),
+                  child: CustomElevatedButton(
+                    onPressed: isFetchingLocation ? null : fetchCurrentLocation,
+                    child: isFetchingLocation
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            'Update Location',
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                  ),
                 ),
-              ),
               const SizedBox(height: 20),
               const Text('Name'),
               const SizedBox(height: 8),
@@ -255,7 +300,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                 labelText: 'name',
                 keyboardType: TextInputType.name,
                 controller: nameController,
-                validator: AppValidator.validateName,
+                validator: isEditable ? AppValidator.validateName : null,
+                enabled: isEditable, // 👈 تعطيل لو مش editable
               ),
               const SizedBox(height: 10),
               const Text('Phone'),
@@ -265,7 +311,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                 labelText: 'phone',
                 keyboardType: TextInputType.phone,
                 controller: phoneController,
-                validator: AppValidator.validatePhone,
+                validator: isEditable ? AppValidator.validatePhone : null,
+                enabled: isEditable,
               ),
               const SizedBox(height: 10),
               const Text('Address'),
@@ -275,21 +322,37 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                 labelText: 'address',
                 keyboardType: TextInputType.streetAddress,
                 controller: addressController,
-                validator: AppValidator.validateAddress,
+                validator: isEditable ? AppValidator.validateAddress : null,
+                enabled: isEditable,
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 80),
-                child: CustomElevatedButton(
-                  onPressed: isSavingClient ? null : saveClientData,
-                  child: isSavingClient
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                          'Save',
-                          style: GoogleFonts.poppins(color: Colors.white),
-                        ),
+              if (isEditable)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 80),
+                  child: CustomElevatedButton(
+                    onPressed: isSavingClient ? null : saveClientData,
+                    child: isSavingClient
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            'Save',
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                  ),
                 ),
-              ),
+              if (!isEditable)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    currentUserRole == 'admin'
+                        ? 'View only mode: Only admins can edit client details.'
+                        : 'View only mode: Only admins or within 12 hours of creation can edit.',
+                    style: GoogleFonts.poppins(
+                      color: Colors.orange,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               const SizedBox(height: 20),
             ],
           ),
