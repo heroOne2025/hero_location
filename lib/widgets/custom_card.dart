@@ -17,17 +17,13 @@ class CustomCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 20,
         margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 5,
             children: [
               Text(
                 name,
@@ -36,6 +32,7 @@ class CustomCard extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
+              const SizedBox(height: 5),
               Text(phone, style: GoogleFonts.poppins(fontSize: 18)),
             ],
           ),
