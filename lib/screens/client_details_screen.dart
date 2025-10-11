@@ -14,8 +14,13 @@ import 'package:url_launcher/url_launcher.dart';
 class ClientDetailsScreen extends StatefulWidget {
   static const String routeName = 'ClientDetailsScreen';
   final String clientId;
+  final String? agentId; // 👈 إضافة: agentId اختياري، لو admin يمرره
 
-  const ClientDetailsScreen({super.key, required this.clientId});
+  const ClientDetailsScreen({
+    super.key,
+    required this.clientId,
+    this.agentId, // 👈 لو مش موجود، يستخدم currentUser
+  });
 
   @override
   State<ClientDetailsScreen> createState() => _ClientDetailsScreenState();
@@ -86,7 +91,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
   Future<void> loadClientData() async {
     setState(() => isLoading = true);
     try {
-      final agentId = FirebaseAuth.instance.currentUser!.uid;
+      // 👈 استخدام agentId الممرر، أو currentUser لو مش موجود (للـ agent)
+      final agentId = widget.agentId ?? FirebaseAuth.instance.currentUser!.uid;
 
       final doc = await FirebaseFirestore.instance
           .collection('users')
@@ -173,7 +179,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
 
     setState(() => isSavingClient = true);
     try {
-      final agentId = FirebaseAuth.instance.currentUser!.uid;
+      // 👈 استخدام agentId الممرر، أو currentUser لو مش موجود
+      final agentId = widget.agentId ?? FirebaseAuth.instance.currentUser!.uid;
 
       await FirebaseFirestore.instance
           .collection('users')
