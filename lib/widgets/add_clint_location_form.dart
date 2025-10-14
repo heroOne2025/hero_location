@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
@@ -43,7 +44,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showSnackBar("Location services are disabled");
+      showSnackBar(AppLocalizations.of(context)!.locationServicesDisabled);
       setState(() => isFetchingLocation = false);
       return;
     }
@@ -52,13 +53,15 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        showSnackBar("Location permission denied");
+        showSnackBar(AppLocalizations.of(context)!.locationPermissionDenied);
         setState(() => isFetchingLocation = false);
         return;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      showSnackBar("Location permission permanently denied");
+      showSnackBar(
+        AppLocalizations.of(context)!.locationPermissionPermanentlyDenied,
+      );
       setState(() => isFetchingLocation = false);
       return;
     }
@@ -87,7 +90,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
       if (await canLaunchUrl(url)) {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       } else {
-        showSnackBar("Could not open Google Maps");
+        showSnackBar(AppLocalizations.of(context)!.couldNotOpenGoogleMaps);
       }
     }
   }
@@ -99,7 +102,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
     }
 
     if (currentLocation == null) {
-      showSnackBar("Please get current location first");
+      showSnackBar(AppLocalizations.of(context)!.pleaseGetCurrentLocationFirst);
       return;
     }
 
@@ -128,7 +131,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
       // 'createdAt': FieldValue.serverTimestamp(),
       // });
       Navigator.pop(context);
-      showSnackBar("Client added successfully");
+      showSnackBar(AppLocalizations.of(context)!.clientAddedSuccessfully);
 
       // تفريغ الفورم
       nameController.clear();
@@ -201,40 +204,40 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
               child: isFetchingLocation
                   ? const CircularProgressIndicator(color: Colors.white)
                   : Text(
-                      'Get Current Location',
+                      AppLocalizations.of(context)!.getCurrentLocation,
                       style: GoogleFonts.poppins(color: Colors.white),
                     ),
             ),
           ),
           const SizedBox(height: 20),
-          Text('Name'),
+          Text(AppLocalizations.of(context)!.name),
           const SizedBox(height: 8),
           CustomTextFormField(
-            hintText: "Clint Name",
-            labelText: 'name',
+            hintText: AppLocalizations.of(context)!.clientName,
+            labelText: AppLocalizations.of(context)!.name,
             keyboardType: TextInputType.name,
             controller: nameController,
-            validator: (value) => AppValidator.validateName(value),
+            validator: (value) => AppValidator.validateName(context, value),
           ),
           const SizedBox(height: 10),
-          Text('Phone'),
+          Text(AppLocalizations.of(context)!.phoneNumber),
           const SizedBox(height: 8),
           CustomTextFormField(
-            hintText: "Clint Phone",
-            labelText: 'phone',
+            hintText: AppLocalizations.of(context)!.clientPhone,
+            labelText: AppLocalizations.of(context)!.phoneNumber,
             keyboardType: TextInputType.phone,
             controller: phoneController,
-            validator: (value) => AppValidator.validatePhone(value),
+            validator: (value) => AppValidator.validatePhone(context, value),
           ),
           const SizedBox(height: 10),
-          Text('Address'),
+          Text(AppLocalizations.of(context)!.phoneNumber),
           const SizedBox(height: 8),
           CustomTextFormField(
-            hintText: "Clint Address",
-            labelText: 'address',
+            hintText: AppLocalizations.of(context)!.clientAddress,
+            labelText: AppLocalizations.of(context)!.address,
             keyboardType: TextInputType.streetAddress,
             controller: addressController,
-            validator: (value) => AppValidator.validateAddress(value),
+            validator: (value) => AppValidator.validateAddress(context, value),
           ),
           const SizedBox(height: 20),
           Padding(
@@ -244,7 +247,7 @@ class _AddClintLocationFormState extends State<AddClintLocationForm> {
               child: isSavingClient
                   ? const CircularProgressIndicator(color: Colors.white)
                   : Text(
-                      'Add Client',
+                      AppLocalizations.of(context)!.addClient,
                       style: GoogleFonts.poppins(color: Colors.white),
                     ),
             ),

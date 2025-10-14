@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
@@ -115,7 +116,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
           isLocationFetched = true;
         }
       } else {
-        showSnackBar('Client not found');
+        showSnackBar(AppLocalizations.of(context)!.clientNotFound);
       }
     } catch (e) {
       showSnackBar('Error loading client data: $e');
@@ -131,7 +132,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showSnackBar("Location services are disabled");
+      showSnackBar(AppLocalizations.of(context)!.locationServicesDisabled);
       setState(() => isFetchingLocation = false);
       return;
     }
@@ -140,14 +141,16 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        showSnackBar("Location permission denied");
+        showSnackBar(AppLocalizations.of(context)!.locationPermissionDenied);
         setState(() => isFetchingLocation = false);
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      showSnackBar("Location permission permanently denied");
+      showSnackBar(
+        AppLocalizations.of(context)!.locationPermissionPermanentlyDenied,
+      );
       setState(() => isFetchingLocation = false);
       return;
     }
@@ -168,7 +171,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
 
   Future<void> saveClientData() async {
     if (!isEditable) {
-      showSnackBar('You do not have permission to edit');
+      showSnackBar(AppLocalizations.of(context)!.noPermissionToEdit);
       return;
     }
 
@@ -199,7 +202,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
             'updatedAt': FieldValue.serverTimestamp(),
           });
 
-      showSnackBar("Client updated successfully");
+      showSnackBar(AppLocalizations.of(context)!.clientUpdatedSuccessfully);
       Navigator.pop(context, true);
     } catch (e) {
       showSnackBar("Error updating client: $e");
@@ -210,7 +213,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
 
   Future<void> openGoogleMaps() async {
     if (currentLocation == null) {
-      showSnackBar("No location available");
+      showSnackBar(AppLocalizations.of(context)!.noLocationAvailable);
       return;
     }
 
@@ -221,7 +224,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      showSnackBar("Could not open Google Maps");
+      showSnackBar(AppLocalizations.of(context)!.couldNotOpenGoogleMaps);
     }
   }
 
@@ -233,7 +236,10 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Client Details", style: GoogleFonts.poppins()),
+        title: Text(
+          AppLocalizations.of(context)!.clientDetails,
+          style: GoogleFonts.poppins(),
+        ),
         backgroundColor: AppColors.primryColor,
       ),
       body: SingleChildScrollView(
@@ -294,42 +300,48 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                     child: isFetchingLocation
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Update Location',
+                            AppLocalizations.of(context)!.updateLocation,
                             style: GoogleFonts.poppins(color: Colors.white),
                           ),
                   ),
                 ),
               const SizedBox(height: 20),
-              const Text('Name'),
+              Text(AppLocalizations.of(context)!.name),
               const SizedBox(height: 8),
               CustomTextFormField(
-                hintText: "Client Name",
-                labelText: 'name',
+                hintText: AppLocalizations.of(context)!.clientName,
+                labelText: AppLocalizations.of(context)!.name,
                 keyboardType: TextInputType.name,
                 controller: nameController,
-                validator: isEditable ? AppValidator.validateName : null,
+                validator: (value) => isEditable
+                    ? AppValidator.validateName(context, value)
+                    : null,
                 enabled: isEditable, // 👈 تعطيل لو مش editable
               ),
               const SizedBox(height: 10),
-              const Text('Phone'),
+              Text(AppLocalizations.of(context)!.phoneNumber),
               const SizedBox(height: 8),
               CustomTextFormField(
-                hintText: "Client Phone",
-                labelText: 'phone',
+                hintText: AppLocalizations.of(context)!.clientPhone,
+                labelText: AppLocalizations.of(context)!.phoneNumber,
                 keyboardType: TextInputType.phone,
                 controller: phoneController,
-                validator: isEditable ? AppValidator.validatePhone : null,
+                validator: (value) => isEditable
+                    ? AppValidator.validatePhone(context, value)
+                    : null,
                 enabled: isEditable,
               ),
               const SizedBox(height: 10),
-              const Text('Address'),
+              Text(AppLocalizations.of(context)!.address),
               const SizedBox(height: 8),
               CustomTextFormField(
-                hintText: "Client Address",
-                labelText: 'address',
+                hintText: AppLocalizations.of(context)!.clientAddress,
+                labelText: AppLocalizations.of(context)!.address,
                 keyboardType: TextInputType.streetAddress,
                 controller: addressController,
-                validator: isEditable ? AppValidator.validateAddress : null,
+                validator: (value) => isEditable
+                    ? AppValidator.validateAddress(context, value)
+                    : null,
                 enabled: isEditable,
               ),
               const SizedBox(height: 20),
@@ -341,7 +353,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                     child: isSavingClient
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Save',
+                            AppLocalizations.of(context)!.save,
                             style: GoogleFonts.poppins(color: Colors.white),
                           ),
                   ),
@@ -351,8 +363,8 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                   padding: const EdgeInsets.all(16),
                   child: Text(
                     currentUserRole == 'admin'
-                        ? 'View only mode: Only admins can edit client details.'
-                        : 'View only mode: Only admins or within 12 hours of creation can edit.',
+                        ? AppLocalizations.of(context)!.viewOnlyAdmins
+                        : AppLocalizations.of(context)!.viewOnlyAdminsOr12Hours,
                     style: GoogleFonts.poppins(
                       color: Colors.orange,
                       fontSize: 14,

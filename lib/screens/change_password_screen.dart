@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
@@ -44,7 +45,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        showSnackBar('No user is signed in');
+        showSnackBar(AppLocalizations.of(context)!.noUserSignedIn);
         setState(() => isLoading = false);
         return;
       }
@@ -59,17 +60,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       // تحديث كلمة السر الجديدة
       await user.updatePassword(newPasswordController.text.trim());
 
-      showSnackBar('Password changed successfully');
+      showSnackBar(AppLocalizations.of(context)!.passwordChangedSuccessfully);
       Navigator.pop(context);
     } catch (e) {
-      String errorMessage = 'Error changing password';
+      String errorMessage = AppLocalizations.of(context)!.errorChangingPassword;
       if (e is FirebaseAuthException) {
         switch (e.code) {
           case 'wrong-password':
-            errorMessage = 'Old password is incorrect';
+            errorMessage = AppLocalizations.of(context)!.oldPasswordIncorrect;
             break;
           case 'weak-password':
-            errorMessage = 'New password is too weak';
+            errorMessage = AppLocalizations.of(context)!.newPasswordTooWeak;
             break;
           default:
             errorMessage = 'Error: ${e.message}';
@@ -85,7 +86,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password', style: GoogleFonts.poppins()),
+        title: Text(
+          AppLocalizations.of(context)!.changePassword,
+          style: GoogleFonts.poppins(),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -99,23 +103,27 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'Change Password',
+                  AppLocalizations.of(context)!.changePassword,
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 40),
-                Text('Old Password', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.oldPassword,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'Old Password',
-                  labelText: 'Old Password',
+                  hintText: AppLocalizations.of(context)!.oldPassword,
+                  labelText: AppLocalizations.of(context)!.oldPassword,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText:
                       obscureOldPassword, // 👈 التحكم في الإظهار/الإخفاء
                   controller: oldPasswordController,
-                  validator: (value) => AppValidator.validatePassword(value),
+                  validator: (value) =>
+                      AppValidator.validatePassword(context, value),
                   suffixIcon: IconButton(
                     icon: Icon(
                       obscureOldPassword
@@ -128,16 +136,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text('New Password', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.newPassword,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'New Password',
-                  labelText: 'New Password',
+                  hintText: AppLocalizations.of(context)!.newPassword,
+                  labelText: AppLocalizations.of(context)!.newPassword,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText:
                       obscureNewPassword, // 👈 التحكم في الإظهار/الإخفاء
                   controller: newPasswordController,
-                  validator: (value) => AppValidator.validatePassword(value),
+                  validator: (value) =>
+                      AppValidator.validatePassword(context, value),
                   suffixIcon: IconButton(
                     icon: Icon(
                       obscureNewPassword
@@ -150,16 +162,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('Confirm Password', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.confirmPassword,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'Confirm Password',
-                  labelText: 'Confirm Password',
+                  hintText: AppLocalizations.of(context)!.confirmPassword,
+                  labelText: AppLocalizations.of(context)!.confirmPassword,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText:
                       obscureConfirmPassword, // 👈 التحكم في الإظهار/الإخفاء
                   controller: confirmPasswordController,
                   validator: (value) => AppValidator.validateConfirmPassword(
+                    context,
                     value,
                     newPasswordController.text,
                   ),
@@ -180,12 +196,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 80.0),
                   child: CustomElevatedButton(
-                    textOnButton: "Change Password",
                     onPressed: isLoading ? null : changePassword,
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Change Password',
+                            AppLocalizations.of(context)!.changePassword,
                             style: GoogleFonts.poppins(color: Colors.white),
                           ),
                   ),

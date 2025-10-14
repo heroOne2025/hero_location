@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
@@ -47,9 +48,11 @@ class _SignUpFormState extends State<SignUpForm> {
               password: passwordController.text,
             );
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Sign-up successful')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.signUpSuccessful),
+            ),
+          );
           Navigator.pushNamedAndRemoveUntil(
             context,
             HomeScreen.routeName,
@@ -67,16 +70,16 @@ class _SignUpFormState extends State<SignUpForm> {
           String errorMessage;
           switch (e.code) {
             case 'weak-password':
-              errorMessage = 'The password provided is too weak.';
+              errorMessage = AppLocalizations.of(context)!.weakPassword;
               break;
             case 'email-already-in-use':
-              errorMessage = 'An account already exists for that email.';
+              errorMessage = AppLocalizations.of(context)!.emailAlreadyInUse;
               break;
             case 'invalid-email':
-              errorMessage = 'Invalid email format.';
+              errorMessage = AppLocalizations.of(context)!.invalidEmailFormat;
               break;
             case 'operation-not-allowed':
-              errorMessage = 'Email/password sign-up is disabled.';
+              errorMessage = AppLocalizations.of(context)!.userDisabled;
               break;
             default:
               errorMessage = 'An error occurred: ${e.message}';
@@ -108,53 +111,65 @@ class _SignUpFormState extends State<SignUpForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Name', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.name,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your Name',
-            labelText: 'Name',
+            hintText: AppLocalizations.of(context)!.enterYourName,
+            labelText: AppLocalizations.of(context)!.name,
             keyboardType: TextInputType.name,
             controller: nameController,
             onChanged: (value) {
               nameController.text = value;
             },
-            validator: (value) => AppValidator.validateName(value),
+            validator: (value) => AppValidator.validateName(context, value),
           ),
           SizedBox(height: 16.0),
-          Text('Email', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.email,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your Email',
-            labelText: 'Email',
+            hintText: AppLocalizations.of(context)!.enterYourEmail,
+            labelText: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             controller: emailController,
 
-            validator: (value) => AppValidator.validateEmail(value),
+            validator: (value) => AppValidator.validateEmail(context, value),
           ),
           SizedBox(height: 16.0),
 
-          Text('phone', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.phoneNumber,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter phone number',
-            labelText: 'Phone',
+            hintText: AppLocalizations.of(context)!.enterPhoneNumber,
+            labelText: AppLocalizations.of(context)!.phoneNumber,
             keyboardType: TextInputType.phone,
             controller: phoneController,
 
-            validator: (value) => AppValidator.validatePhone(value),
+            validator: (value) => AppValidator.validatePhone(context, value),
           ),
           SizedBox(height: 16.0),
-          Text('Password', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.password,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your password',
-            labelText: 'Password',
+            hintText: AppLocalizations.of(context)!.enterYourPassword,
+            labelText: AppLocalizations.of(context)!.password,
             obscureText: obscureText,
             controller: passwordController,
             onChanged: (value) {
               passwordController.text = value;
             },
-            validator: (value) => AppValidator.validatePassword(value),
+            validator: (value) => AppValidator.validatePassword(context, value),
             suffixIcon: IconButton(
               icon: obscureText ? suffixIcon : const Icon(Icons.visibility),
               onPressed: () {
@@ -166,17 +181,21 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           SizedBox(height: 16.0),
 
-          Text('Confirm Password', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.confirmPassword,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your password',
-            labelText: 'Password',
+            hintText: AppLocalizations.of(context)!.enterYourPassword,
+            labelText: AppLocalizations.of(context)!.password,
             obscureText: obscureText2,
             controller: confirmPasswordController,
             onChanged: (value) {
               confirmPasswordController.text = value;
             },
             validator: (value) => AppValidator.validateConfirmPassword(
+              context,
               value,
               passwordController.text,
             ),
@@ -195,7 +214,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: isLoading
                 ? const CircularProgressIndicator(color: Colors.white)
                 : Text(
-                    'SignUp',
+                    AppLocalizations.of(context)!.signUp,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

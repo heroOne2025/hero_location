@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
@@ -54,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         emailController.text = data['email'] ?? '';
         phoneController.text = data['phone'] ?? '';
       } else {
-        showSnackBar('User not found');
+        showSnackBar(AppLocalizations.of(context)!.userNotFound);
       }
     } catch (e) {
       showSnackBar('Error loading user data: $e');
@@ -79,7 +80,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         'updatedAt': FieldValue.serverTimestamp(), // 👈 إضافة وقت التحديث
       });
 
-      showSnackBar("Profile updated successfully");
+      showSnackBar(AppLocalizations.of(context)!.profileUpdatedSuccessfully);
       Navigator.pop(context);
     } catch (e) {
       showSnackBar("Error updating profile: $e");
@@ -95,7 +96,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Profile', style: GoogleFonts.poppins())),
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.editProfile,
+          style: GoogleFonts.poppins(),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -108,54 +114,65 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'Welcome ${nameController.text.isEmpty ? 'User' : nameController.text}',
+                  '${AppLocalizations.of(context)!.welcome} ${nameController.text.isEmpty ? 'User' : nameController.text}',
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 40),
-                Text('Name', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.name,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'Name',
-                  labelText: 'Name',
+                  hintText: AppLocalizations.of(context)!.name,
+                  labelText: AppLocalizations.of(context)!.name,
                   keyboardType:
                       TextInputType.name, // 👈 تغيير من streetAddress إلى name
                   controller: nameController,
-                  validator: AppValidator.validateName,
+                  validator: (value) =>
+                      AppValidator.validateName(context, value),
                 ),
                 const SizedBox(height: 8),
-                Text('Email', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.email,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'Email',
-                  labelText: 'Email',
+                  hintText: AppLocalizations.of(context)!.email,
+                  labelText: AppLocalizations.of(context)!.email,
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  validator: AppValidator.validateEmail,
+                  validator: (value) =>
+                      AppValidator.validateEmail(context, value),
                   enabled: false, // 👈 الإيميل read-only
                 ),
                 const SizedBox(height: 16),
-                Text('Phone Number', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.phoneNumber,
+                  style: GoogleFonts.poppins(),
+                ),
                 const SizedBox(height: 8),
                 CustomTextFormField(
-                  hintText: 'Phone Number',
-                  labelText: 'Phone Number',
+                  hintText: AppLocalizations.of(context)!.phoneNumber,
+                  labelText: AppLocalizations.of(context)!.phoneNumber,
                   keyboardType: TextInputType.phone,
                   controller: phoneController,
-                  validator: AppValidator.validatePhone,
+                  validator: (value) =>
+                      AppValidator.validatePhone(context, value),
                 ),
                 const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
                   child: CustomElevatedButton(
-                    textOnButton: "Save Changes",
                     onPressed: isSaving ? null : saveUserData,
                     child: isSaving
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Save Changes',
+                            AppLocalizations.of(context)!.saveChanges,
                             style: GoogleFonts.poppins(color: Colors.white),
                           ),
                   ),
