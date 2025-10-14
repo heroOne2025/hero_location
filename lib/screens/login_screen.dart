@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/sign_up_screen.dart';
 import 'package:hero_location/widgets/custom_text_button.dart';
 import 'package:hero_location/widgets/login_form.dart';
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 100.0),
               Center(
                 child: Text(
-                  "Wolcome",
+                  AppLocalizations.of(context)!.welcome,
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -30,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 80.0),
               Text(
-                'Login',
+                AppLocalizations.of(context)!.login,
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -42,9 +43,12 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?", style: GoogleFonts.poppins()),
+                  Text(
+                    AppLocalizations.of(context)!.dontHaveAccount,
+                    style: GoogleFonts.poppins(),
+                  ),
                   CustomTextButton(
-                    textButtonText: 'Sing Up',
+                    textButtonText: AppLocalizations.of(context)!.signUp,
                     onPressed: () {
                       Navigator.pushNamed(context, SignUpScreen.routeName);
                     },

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/forget_password_screen.dart';
 import 'package:hero_location/screens/home_screen.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
@@ -41,9 +42,11 @@ class _LoginFormState extends State<LoginForm> {
           password: passwordController.text,
         );
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Login successful')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.loginSuccessful),
+            ),
+          );
           Navigator.pushReplacementNamed(context, HomeScreen.routeName);
         }
       } on FirebaseAuthException catch (e) {
@@ -51,20 +54,28 @@ class _LoginFormState extends State<LoginForm> {
           String errorMessage;
           switch (e.code) {
             case 'user-not-found':
-              errorMessage = 'No user found for that email.';
+              errorMessage = AppLocalizations.of(
+                context,
+              )!.noUserFoundForThatEmail;
               break;
             case 'wrong-password':
-              errorMessage = 'Wrong password provided.';
+              errorMessage = AppLocalizations.of(context)!.wrongPassword;
               break;
             case 'invalid-email':
-              errorMessage = 'Invalid email format.';
+              errorMessage = AppLocalizations.of(context)!.invalidEmailFormat;
               break;
             case 'user-disabled':
-              errorMessage = 'This user account has been disabled.';
+              errorMessage = AppLocalizations.of(context)!.userDisabled;
+              break;
+            case 'invalid-credential':
+            case 'invalid-verification-code':
+            case 'invalid-verification-id':
+              errorMessage = AppLocalizations.of(context)!.invalidCredential;
               break;
             default:
-              errorMessage = 'An error occurred: ${e.message}';
+              errorMessage = AppLocalizations.of(context)!.unknownError;
           }
+
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(errorMessage)));
@@ -92,22 +103,28 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Email', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.email,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your email',
-            labelText: 'Email',
+            hintText: AppLocalizations.of(context)!.enterYourEmail,
+            labelText: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             controller: emailController,
 
-            validator: (value) => AppValidator.validateEmail(value),
+            validator: (value) => AppValidator.validateEmail(context, value),
           ),
           SizedBox(height: 16.0),
-          Text('Password', style: GoogleFonts.poppins()),
+          Text(
+            AppLocalizations.of(context)!.password,
+            style: GoogleFonts.poppins(),
+          ),
           SizedBox(height: 8.0),
           CustomTextFormField(
-            hintText: 'Enter your password',
-            labelText: 'Password',
+            hintText: AppLocalizations.of(context)!.enterYourPassword,
+            labelText: AppLocalizations.of(context)!.password,
             obscureText: obscureText,
             keyboardType: TextInputType.visiblePassword,
             controller: passwordController,
@@ -120,10 +137,10 @@ class _LoginFormState extends State<LoginForm> {
                 });
               },
             ),
-            validator: (value) => AppValidator.validatePassword(value),
+            validator: (value) => AppValidator.validatePassword(context, value),
           ),
           CustomTextButton(
-            textButtonText: 'Forget Password?',
+            textButtonText: AppLocalizations.of(context)!.forgetPassword,
             onPressed: () {
               Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
             },
@@ -134,7 +151,7 @@ class _LoginFormState extends State<LoginForm> {
             child: isLoading
                 ? const CircularProgressIndicator(color: Colors.white)
                 : Text(
-                    'Login',
+                    AppLocalizations.of(context)!.login,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

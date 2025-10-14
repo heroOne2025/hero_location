@@ -2,13 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/agent_customers_screen.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_card.dart';
 import 'package:hero_location/widgets/empty_home_screen.dart';
 
 class AdminUsersList extends StatefulWidget {
-  const AdminUsersList({super.key});
+  final GlobalKey<ScaffoldMessengerState>?
+  scaffoldMessengerKey; // 👈 حديث: ScaffoldMessengerState
+
+  const AdminUsersList({super.key, this.scaffoldMessengerKey});
 
   @override
   State<AdminUsersList> createState() => _AdminUsersListState();
@@ -17,6 +21,17 @@ class AdminUsersList extends StatefulWidget {
 class _AdminUsersListState extends State<AdminUsersList> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  late final ScaffoldMessengerState
+  _scaffoldMessenger; // 👈 حديث: ScaffoldMessengerState reference محفوظ
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 👈 استخدم الـ GlobalKey لو موجود، وإلا الـ local
+    _scaffoldMessenger =
+        widget.scaffoldMessengerKey?.currentState ??
+        ScaffoldMessenger.of(context);
+  }
 
   @override
   void dispose() {
@@ -24,8 +39,8 @@ class _AdminUsersListState extends State<AdminUsersList> {
     super.dispose();
   }
 
+  // 👈 إزالة context param، واستخدام _scaffoldMessenger بس
   Future<void> _deleteAgent(
-    BuildContext context,
     String agentId,
     Map<String, dynamic> agentData,
   ) async {
@@ -34,7 +49,10 @@ class _AdminUsersListState extends State<AdminUsersList> {
           .collection('users')
           .doc(agentId)
           .delete();
-      ScaffoldMessenger.of(context).showSnackBar(
+
+      if (!mounted) return;
+
+      _scaffoldMessenger.showSnackBar(
         SnackBar(
           content: Text('Agent deleted successfully'),
           duration: const Duration(seconds: 4),
@@ -42,34 +60,47 @@ class _AdminUsersListState extends State<AdminUsersList> {
             label: 'Undo',
             textColor: Colors.white,
             onPressed: () async {
+              if (!mounted) return;
+
               try {
                 await FirebaseFirestore.instance
                     .collection('users')
                     .doc(agentId)
                     .set(agentData);
-                // 👈 إضافة: تحديث الشاشة بعد الـ restore
-                setState(() {}); // يجبر الـ StreamBuilder يقرأ تاني
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Agent restored')));
+                if (mounted)
+                  setState(() {}); // 👈 يجبر الـ StreamBuilder يقرأ تاني
+                if (mounted) {
+                  _scaffoldMessenger.showSnackBar(
+                    const SnackBar(content: Text('Agent restored')),
+                  );
+                }
               } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error restoring agent: $e')),
-                );
+                if (mounted) {
+                  _scaffoldMessenger.showSnackBar(
+                    SnackBar(content: Text('Error restoring agent: $e')),
+                  );
+                }
               }
             },
           ),
         ),
       );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error deleting agent: $e')));
+      if (mounted) {
+        _scaffoldMessenger.showSnackBar(
+          SnackBar(content: Text('Error deleting agent: $e')),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentUserId = FirebaseAuth
+        .instance
+        .currentUser!
+        .uid; // 👈 الحصول على ID الـ admin الحالي
+
     return Column(
       children: [
         Padding(
@@ -80,7 +111,7 @@ class _AdminUsersListState extends State<AdminUsersList> {
               _searchQuery = value.toLowerCase();
             }),
             decoration: InputDecoration(
-              hintText: 'Search agents by name or phone...',
+              hintText: AppLocalizations.of(context)!.searchAgents,
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -121,17 +152,64 @@ class _AdminUsersListState extends State<AdminUsersList> {
                 return const EmptyHomeScreen();
               }
 
-              return ListView.builder(
-                itemCount: filteredAgents.length,
-                itemBuilder: (context, index) {
-                  final agentDoc = filteredAgents[index];
-                  final agent = agentDoc.data();
+              // 👈 البحث عن الـ admin الحالي بـ try-catch عشان الـ type error
+              QueryDocumentSnapshot<Map<String, dynamic>>? adminDoc;
+              try {
+                adminDoc = filteredAgents.firstWhere(
+                  (doc) => doc.id == currentUserId,
+                );
+              } catch (e) {
+                adminDoc = null;
+              }
 
+              // 👈 الترتيب: الـ admin أولًا، باقي الـ agents بعديه
+              final sortedAgents =
+                  <QueryDocumentSnapshot<Map<String, dynamic>>>[];
+              if (adminDoc != null) {
+                sortedAgents.add(adminDoc);
+                sortedAgents.addAll(
+                  filteredAgents.where((doc) => doc.id != currentUserId),
+                );
+              } else {
+                sortedAgents.addAll(filteredAgents);
+              }
+
+              return ListView.builder(
+                itemCount: sortedAgents.length,
+                itemBuilder: (context, index) {
+                  final agentDoc = sortedAgents[index];
+                  final agent = agentDoc.data();
+                  final isCurrentAdmin =
+                      agentDoc.id ==
+                      currentUserId; // 👈 تحقق لو ده الـ admin الحالي
+
+                  final card = CustomCard(
+                    name: agent['name'],
+                    phone: agent['phone'],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AgentCustomersScreen(
+                            agentId: agentDoc.id,
+                            agentName: agent['name'],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
+                  if (isCurrentAdmin) {
+                    // 👈 لو الـ admin الحالي، مش Dismissible (مش قابل للـ delete)
+                    return card;
+                  }
+
+                  // 👈 باقي الـ agents قابلين للـ delete
                   return Dismissible(
-                    key: Key(agentDoc.id),
+                    key: ValueKey(agentDoc.id),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) =>
-                        _deleteAgent(context, agentDoc.id, agent),
+                        _deleteAgent(agentDoc.id, agent),
                     background: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
@@ -149,21 +227,7 @@ class _AdminUsersListState extends State<AdminUsersList> {
                         ),
                       ),
                     ),
-                    child: CustomCard(
-                      name: agent['name'],
-                      phone: agent['phone'],
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AgentCustomersScreen(
-                              agentId: agentDoc.id,
-                              agentName: agent['name'],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    child: card,
                   );
                 },
               );

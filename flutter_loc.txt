@@ -1,0 +1,927 @@
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/core/utils/app_validator.dart}##
+#----------#
+##MATCH-LINE{4}##
+(13) 'Please enter your name' ===> "" !;;!
+
+##MATCH-LINE{6}##
+(13) 'Name must be at least 3 characters long' ===> "" !;;!
+
+##MATCH-LINE{7}##
+(24) '^[\p{L}\s]+$' ===> "" !;;!
+
+##MATCH-LINE{8}##
+(13) 'Name can only contain letters and spaces' ===> "" !;;!
+
+##MATCH-LINE{15}##
+(13) 'Please enter your email' ===> "" !;;!
+
+##MATCH-LINE{16}##
+(24) '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$' ===> "" !;;!
+
+##MATCH-LINE{17}##
+(13) 'Enter a valid email' ===> "" !;;!
+
+##MATCH-LINE{24}##
+(13) 'Please enter your password' ===> "" !;;!
+
+##MATCH-LINE{26}##
+(13) 'Password must be at least 8 characters' ===> "" !;;!
+
+##MATCH-LINE{28}##
+(7) '^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]+$' ===> "" !;;!
+
+##MATCH-LINE{30}##
+(13) 'Password must contain at least\n one uppercase letter and one number' ===> "" !;;!
+
+##MATCH-LINE{40}##
+(13) 'Please confirm your password' ===> "" !;;!
+
+##MATCH-LINE{42}##
+(13) 'Passwords do not match' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(13) 'Please enter your phone number' ===> "" !;;!
+
+##MATCH-LINE{50}##
+(24) '^\+?\d{10,15}$' ===> "" !;;!
+
+##MATCH-LINE{51}##
+(13) 'Enter a valid phone number' ===> "" !;;!
+
+##MATCH-LINE{58}##
+(13) 'Please enter the address' ===> "" !;;!
+
+##MATCH-LINE{60}##
+(13) 'Address must be at least 5 characters long' ===> "" !;;!
+
+##MATCH-LINE{62}##
+(7) '^[\p{L}0-9\s,.\-\/]+$' ===> "" !;;!
+
+##MATCH-LINE{65}##
+(13) 'Address contains invalid characters' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/Add_clint_location_screen.dart}##
+#----------#
+##MATCH-LINE{7}##
+(28) '/add_clint_location' ===> "" !;;!
+
+##MATCH-LINE{14}##
+(20) 'Add Client Location' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/agent_customers_screen.dart}##
+#----------#
+##MATCH-LINE{19}##
+(20) '$agentName Customers' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/app_language_screen.dart}##
+#----------#
+
+##MATCH-LINE{14}##
+(20) 'English' ===> "" !;;!
+
+##MATCH-LINE{18}##
+(33) 'App Language' ===> "" !;;!
+
+##MATCH-LINE{24}##
+(14) 'Choose your language ' ===> "" !;;!
+
+##MATCH-LINE{42}##
+(27) 'English' ===> "" !;;!
+
+##MATCH-LINE{43}##
+(32) 'English' ===> "" !;;!
+
+##MATCH-LINE{44}##
+(42) 'English' ===> "" !;;!
+
+##MATCH-LINE{48}##
+(27) 'Arabic' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(32) 'Arabic' ===> "" !;;!
+
+##MATCH-LINE{50}##
+(42) 'Arabic' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/change_password_screen.dart}##
+#----------#
+
+##MATCH-LINE{47}##
+(21) 'No user is signed in' ===> "" !;;!
+
+##MATCH-LINE{62}##
+(19) 'Password changed successfully' ===> "" !;;!
+
+##MATCH-LINE{65}##
+(28) 'Error changing password' ===> "" !;;!
+
+##MATCH-LINE{68}##
+(15) 'wrong-password' ===> "" !;;!
+
+##MATCH-LINE{69}##
+(27) 'Old password is incorrect' ===> "" !;;!
+
+##MATCH-LINE{71}##
+(15) 'weak-password' ===> "" !;;!
+
+##MATCH-LINE{72}##
+(27) 'New password is too weak' ===> "" !;;!
+
+##MATCH-LINE{75}##
+(27) 'Error: ${e.message}' ===> "" !;;!
+
+##MATCH-LINE{88}##
+(20) 'Change Password' ===> "" !;;!
+
+##MATCH-LINE{102}##
+(18) 'Change Password' ===> "" !;;!
+
+##MATCH-LINE{109}##
+(21) 'Old Password' ===> "" !;;!
+
+##MATCH-LINE{112}##
+(28) 'Old Password' ===> "" !;;!
+
+##MATCH-LINE{113}##
+(29) 'Old Password' ===> "" !;;!
+
+##MATCH-LINE{131}##
+(21) 'New Password' ===> "" !;;!
+
+##MATCH-LINE{134}##
+(28) 'New Password' ===> "" !;;!
+
+##MATCH-LINE{135}##
+(29) 'New Password' ===> "" !;;!
+
+##MATCH-LINE{153}##
+(21) 'Confirm Password' ===> "" !;;!
+
+##MATCH-LINE{156}##
+(28) 'Confirm Password' ===> "" !;;!
+
+##MATCH-LINE{157}##
+(29) 'Confirm Password' ===> "" !;;!
+
+##MATCH-LINE{183}##
+(34) "Change Password" ===> "" !;;!
+
+##MATCH-LINE{188}##
+(28) 'Change Password' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/client_details_screen.dart}##
+#----------#
+##MATCH-LINE{15}##
+(34) 'ClientDetailsScreen' ===> "" !;;!
+
+##MATCH-LINE{65}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{69}##
+(38) 'role' ===> "" !;;!
+(49) 'agent' ===> "" !;;!
+
+##MATCH-LINE{72}##
+(19) 'Error loading user role: $e' ===> "" !;;!
+
+##MATCH-LINE{77}##
+(27) 'admin' ===> "" !;;!
+
+##MATCH-LINE{79}##
+(34) 'agent' ===> "" !;;!
+
+##MATCH-LINE{98}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{100}##
+(22) 'customers' ===> "" !;;!
+
+##MATCH-LINE{106}##
+(35) 'name' ===> "" !;;!
+
+##MATCH-LINE{107}##
+(36) 'phone' ===> "" !;;!
+
+##MATCH-LINE{108}##
+(38) 'address' ===> "" !;;!
+
+##MATCH-LINE{110}##
+(25) 'createdAt' ===> "" !;;!
+
+##MATCH-LINE{112}##
+(17) 'location' ===> "" !;;!
+
+##MATCH-LINE{113}##
+(32) 'location' ===> "" !;;!
+
+##MATCH-LINE{118}##
+(21) 'Client not found' ===> "" !;;!
+
+##MATCH-LINE{121}##
+(19) 'Error loading client data: $e' ===> "" !;;!
+
+##MATCH-LINE{134}##
+(19) "Location services are disabled" ===> "" !;;!
+
+##MATCH-LINE{143}##
+(21) "Location permission denied" ===> "" !;;!
+
+##MATCH-LINE{150}##
+(19) "Location permission permanently denied" ===> "" !;;!
+
+##MATCH-LINE{171}##
+(19) 'You do not have permission to edit' ===> "" !;;!
+
+##MATCH-LINE{186}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{188}##
+(22) 'customers' ===> "" !;;!
+
+##MATCH-LINE{191}##
+(12) 'name' ===> "" !;;!
+
+##MATCH-LINE{192}##
+(12) 'phone' ===> "" !;;!
+
+##MATCH-LINE{193}##
+(12) 'address' ===> "" !;;!
+
+##MATCH-LINE{195}##
+(14) 'location' ===> "" !;;!
+
+##MATCH-LINE{199}##
+(12) 'updatedAt' ===> "" !;;!
+
+##MATCH-LINE{202}##
+(19) "Client updated successfully" ===> "" !;;!
+
+##MATCH-LINE{205}##
+(19) "Error updating client: $e" ===> "" !;;!
+
+##MATCH-LINE{213}##
+(19) "No location available" ===> "" !;;!
+
+##MATCH-LINE{218}##
+(6) 'https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude},${currentLocation!.longitude}' ===> "" !;;!
+
+##MATCH-LINE{224}##
+(19) "Could not open Google Maps" ===> "" !;;!
+
+##MATCH-LINE{236}##
+(20) "Client Details" ===> "" !;;!
+
+##MATCH-LINE{269}##
+(32) 'https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}.jpg?key=pP5dm4nw5yGr5Yosmn2z' ===> "" !;;!
+
+##MATCH-LINE{270}##
+(50) 'com.example.hero_location' ===> "" !;;!
+
+##MATCH-LINE{297}##
+(28) 'Update Location' ===> "" !;;!
+
+##MATCH-LINE{303}##
+(25) 'Name' ===> "" !;;!
+
+##MATCH-LINE{306}##
+(26) "Client Name" ===> "" !;;!
+
+##MATCH-LINE{307}##
+(27) 'name' ===> "" !;;!
+
+##MATCH-LINE{314}##
+(25) 'Phone' ===> "" !;;!
+
+##MATCH-LINE{317}##
+(26) "Client Phone" ===> "" !;;!
+
+##MATCH-LINE{318}##
+(27) 'phone' ===> "" !;;!
+
+##MATCH-LINE{325}##
+(25) 'Address' ===> "" !;;!
+
+##MATCH-LINE{328}##
+(26) "Client Address" ===> "" !;;!
+
+##MATCH-LINE{329}##
+(27) 'address' ===> "" !;;!
+
+##MATCH-LINE{344}##
+(28) 'Save' ===> "" !;;!
+
+##MATCH-LINE{353}##
+(39) 'admin' ===> "" !;;!
+
+##MATCH-LINE{354}##
+(26) 'View only mode: Only admins can edit client details.' ===> "" !;;!
+
+##MATCH-LINE{355}##
+(26) 'View only mode: Only admins or within 12 hours of creation can edit.' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/edit_profile_screen.dart}##
+#----------#
+##MATCH-LINE{11}##
+(34) '/edit-profile' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(12) 'User data: ${doc.data()}' ===> "" !;;!
+
+##MATCH-LINE{53}##
+(35) 'name' ===> "" !;;!
+
+##MATCH-LINE{54}##
+(36) 'email' ===> "" !;;!
+
+##MATCH-LINE{55}##
+(36) 'phone' ===> "" !;;!
+
+##MATCH-LINE{57}##
+(21) 'User not found' ===> "" !;;!
+
+##MATCH-LINE{60}##
+(19) 'Error loading user data: $e' ===> "" !;;!
+
+##MATCH-LINE{77}##
+(8) 'name' ===> "" !;;!
+
+##MATCH-LINE{78}##
+(8) 'phone' ===> "" !;;!
+
+##MATCH-LINE{79}##
+(8) 'updatedAt' ===> "" !;;!
+
+##MATCH-LINE{82}##
+(19) "Profile updated successfully" ===> "" !;;!
+
+##MATCH-LINE{85}##
+(19) "Error updating profile: $e" ===> "" !;;!
+
+##MATCH-LINE{98}##
+(33) 'Edit Profile' ===> "" !;;!
+
+##MATCH-LINE{111}##
+(18) 'Welcome ${nameController.text.isEmpty ? ' ===> "" !;;!
+(64) ' : nameController.text}' ===> "" !;;!
+
+##MATCH-LINE{118}##
+(21) 'Name' ===> "" !;;!
+
+##MATCH-LINE{121}##
+(28) 'Name' ===> "" !;;!
+
+##MATCH-LINE{122}##
+(29) 'Name' ===> "" !;;!
+
+##MATCH-LINE{129}##
+(21) 'Email' ===> "" !;;!
+
+##MATCH-LINE{132}##
+(28) 'Email' ===> "" !;;!
+
+##MATCH-LINE{133}##
+(29) 'Email' ===> "" !;;!
+
+##MATCH-LINE{140}##
+(21) 'Phone Number' ===> "" !;;!
+
+##MATCH-LINE{143}##
+(28) 'Phone Number' ===> "" !;;!
+
+##MATCH-LINE{144}##
+(29) 'Phone Number' ===> "" !;;!
+
+##MATCH-LINE{153}##
+(34) "Save Changes" ===> "" !;;!
+
+##MATCH-LINE{158}##
+(28) 'Save Changes' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/forget_password_screen.dart}##
+#----------#
+##MATCH-LINE{11}##
+(28) '/forget_password' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(20) "Forget Your Password?" ===> "" !;;!
+
+##MATCH-LINE{57}##
+(21) 'Email' ===> "" !;;!
+
+##MATCH-LINE{60}##
+(28) 'Enter your email' ===> "" !;;!
+
+##MATCH-LINE{61}##
+(29) 'Email' ===> "" !;;!
+
+##MATCH-LINE{68}##
+(32) 'Send' ===> "" !;;!
+
+##MATCH-LINE{79}##
+(44) 'Password reset email sent.' ===> "" !;;!
+
+##MATCH-LINE{87}##
+(33) 'invalid-email' ===> "" !;;!
+
+##MATCH-LINE{88}##
+(45) 'Invalid email format.' ===> "" !;;!
+
+##MATCH-LINE{90}##
+(33) 'user-not-found' ===> "" !;;!
+
+##MATCH-LINE{91}##
+(45) 'No user found for that email.' ===> "" !;;!
+
+##MATCH-LINE{94}##
+(45) 'An error occurred: ${e.message}' ===> "" !;;!
+
+##MATCH-LINE{103}##
+(51) 'Unexpected error: $e' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/home_screen.dart}##
+#----------#
+##MATCH-LINE{10}##
+(28) 'home' ===> "" !;;!
+
+##MATCH-LINE{29}##
+(31) 'Home' ===> "" !;;!
+(40) 'Settings' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/login_screen.dart}##
+#----------#
+##MATCH-LINE{8}##
+(28) 'login' ===> "" !;;!
+
+##MATCH-LINE{24}##
+(18) "Wolcome" ===> "" !;;!
+
+##MATCH-LINE{33}##
+(16) 'Login' ===> "" !;;!
+
+##MATCH-LINE{45}##
+(23) "Don't have an account?" ===> "" !;;!
+
+##MATCH-LINE{47}##
+(36) 'Sing Up' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/sign_up_screen.dart}##
+#----------#
+##MATCH-LINE{7}##
+(28) 'sign_up' ===> "" !;;!
+
+##MATCH-LINE{24}##
+(18) "create an account" ===> "" !;;!
+
+##MATCH-LINE{33}##
+(16) 'Sign Up' ===> "" !;;!
+
+##MATCH-LINE{46}##
+(20) "Already have an account?" ===> "" !;;!
+
+##MATCH-LINE{50}##
+(36) 'Login' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/tabs/home_tab.dart}##
+#----------#
+##MATCH-LINE{54}##
+(14) 'Something went wrong' ===> "" !;;!
+
+##MATCH-LINE{63}##
+(30) 'role' ===> "" !;;!
+(41) 'agent' ===> "" !;;!
+
+##MATCH-LINE{65}##
+(20) 'admin' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/screens/tabs/settings_tab.dart}##
+#----------#
+##MATCH-LINE{28}##
+(18) 'Edit Profile' ===> "" !;;!
+
+##MATCH-LINE{35}##
+(18) 'Change Password' ===> "" !;;!
+
+##MATCH-LINE{42}##
+(18) 'App Language' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(18) 'Logout' ===> "" !;;!
+
+##MATCH-LINE{56}##
+(18) 'Are You sure you want logout' ===> "" !;;!
+
+##MATCH-LINE{64}##
+(20) 'Cancel' ===> "" !;;!
+
+##MATCH-LINE{77}##
+(20) 'yes' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/add_clint_location_form.dart}##
+#----------#
+##MATCH-LINE{46}##
+(19) "Location services are disabled" ===> "" !;;!
+
+##MATCH-LINE{55}##
+(21) "Location permission denied" ===> "" !;;!
+
+##MATCH-LINE{61}##
+(19) "Location permission permanently denied" ===> "" !;;!
+
+##MATCH-LINE{85}##
+(8) 'https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude},${currentLocation!.longitude}' ===> "" !;;!
+
+##MATCH-LINE{90}##
+(21) "Could not open Google Maps" ===> "" !;;!
+
+##MATCH-LINE{102}##
+(19) "Please get current location first" ===> "" !;;!
+
+##MATCH-LINE{131}##
+(19) "Client added successfully" ===> "" !;;!
+
+##MATCH-LINE{142}##
+(19) "Error: $e" ===> "" !;;!
+
+##MATCH-LINE{177}##
+(28) 'https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}.jpg?key=pP5dm4nw5yGr5Yosmn2z' ===> "" !;;!
+
+##MATCH-LINE{178}##
+(46) 'com.example.hero_location' ===> "" !;;!
+
+##MATCH-LINE{204}##
+(22) 'Get Current Location' ===> "" !;;!
+
+##MATCH-LINE{210}##
+(15) 'Name' ===> "" !;;!
+
+##MATCH-LINE{213}##
+(22) "Clint Name" ===> "" !;;!
+
+##MATCH-LINE{214}##
+(23) 'name' ===> "" !;;!
+
+##MATCH-LINE{220}##
+(15) 'Phone' ===> "" !;;!
+
+##MATCH-LINE{223}##
+(22) "Clint Phone" ===> "" !;;!
+
+##MATCH-LINE{224}##
+(23) 'phone' ===> "" !;;!
+
+##MATCH-LINE{230}##
+(15) 'Address' ===> "" !;;!
+
+##MATCH-LINE{233}##
+(22) "Clint Address" ===> "" !;;!
+
+##MATCH-LINE{234}##
+(23) 'address' ===> "" !;;!
+
+##MATCH-LINE{247}##
+(22) 'Add Client' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/admin_users_list.dart}##
+#----------#
+##MATCH-LINE{34}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{39}##
+(24) 'Agent deleted successfully' ===> "" !;;!
+
+##MATCH-LINE{42}##
+(19) 'Undo' ===> "" !;;!
+
+##MATCH-LINE{47}##
+(32) 'users' ===> "" !;;!
+
+##MATCH-LINE{54}##
+(60) 'Agent restored' ===> "" !;;!
+
+##MATCH-LINE{57}##
+(41) 'Error restoring agent: $e' ===> "" !;;!
+
+##MATCH-LINE{67}##
+(44) 'Error deleting agent: $e' ===> "" !;;!
+
+##MATCH-LINE{83}##
+(24) 'Search agents by name or phone...' ===> "" !;;!
+
+##MATCH-LINE{114}##
+(35) 'name' ===> "" !;;!
+
+##MATCH-LINE{115}##
+(36) 'phone' ===> "" !;;!
+
+##MATCH-LINE{153}##
+(34) 'name' ===> "" !;;!
+
+##MATCH-LINE{154}##
+(35) 'phone' ===> "" !;;!
+
+##MATCH-LINE{161}##
+(47) 'name' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/agent_customers_list.dart}##
+#----------#
+##MATCH-LINE{32}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{35}##
+(38) 'role' ===> "" !;;!
+(49) 'agent' ===> "" !;;!
+(59) 'agent' ===> "" !;;!
+
+##MATCH-LINE{37}##
+(13) 'agent' ===> "" !;;!
+
+##MATCH-LINE{49}##
+(22) 'users' ===> "" !;;!
+
+##MATCH-LINE{51}##
+(22) 'customers' ===> "" !;;!
+
+##MATCH-LINE{59}##
+(24) 'Client deleted successfully' ===> "" !;;!
+
+##MATCH-LINE{62}##
+(19) 'Undo' ===> "" !;;!
+
+##MATCH-LINE{69}##
+(32) 'users' ===> "" !;;!
+
+##MATCH-LINE{71}##
+(32) 'customers' ===> "" !;;!
+
+##MATCH-LINE{77}##
+(49) 'Client restored' ===> "" !;;!
+
+##MATCH-LINE{83}##
+(43) 'Error restoring client: $e' ===> "" !;;!
+
+##MATCH-LINE{95}##
+(46) 'Error deleting client: $e' ===> "" !;;!
+
+##MATCH-LINE{109}##
+(45) 'admin' ===> "" !;;!
+
+##MATCH-LINE{121}##
+(28) 'Search clients by name or phone...' ===> "" !;;!
+
+##MATCH-LINE{153}##
+(33) 'name' ===> "" !;;!
+
+##MATCH-LINE{155}##
+(33) 'phone' ===> "" !;;!
+
+##MATCH-LINE{170}##
+(39) 'name' ===> "" !;;!
+
+##MATCH-LINE{171}##
+(40) 'phone' ===> "" !;;!
+
+##MATCH-LINE{187}##
+(46) 'Client updated successfully' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/bottom_nav.dart}##
+#----------#
+##MATCH-LINE{22}##
+(63) 'Home' ===> "" !;;!
+
+##MATCH-LINE{25}##
+(17) 'settings' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/empty_home_screen.dart}##
+#----------#
+##MATCH-LINE{16}##
+(12) 'assets/images/empty_ghost.gif' ===> "" !;;!
+
+##MATCH-LINE{22}##
+(12) 'No clints yet' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/login_form.dart}##
+#----------#
+##MATCH-LINE{46}##
+(54) 'Login successful' ===> "" !;;!
+
+##MATCH-LINE{53}##
+(17) 'user-not-found' ===> "" !;;!
+
+##MATCH-LINE{54}##
+(29) 'No user found for that email.' ===> "" !;;!
+
+##MATCH-LINE{56}##
+(17) 'wrong-password' ===> "" !;;!
+
+##MATCH-LINE{57}##
+(29) 'Wrong password provided.' ===> "" !;;!
+
+##MATCH-LINE{59}##
+(17) 'invalid-email' ===> "" !;;!
+
+##MATCH-LINE{60}##
+(29) 'Invalid email format.' ===> "" !;;!
+
+##MATCH-LINE{62}##
+(17) 'user-disabled' ===> "" !;;!
+
+##MATCH-LINE{63}##
+(29) 'This user account has been disabled.' ===> "" !;;!
+
+##MATCH-LINE{66}##
+(29) 'An error occurred: ${e.message}' ===> "" !;;!
+
+##MATCH-LINE{76}##
+(48) 'Unexpected error: $e' ===> "" !;;!
+
+##MATCH-LINE{95}##
+(15) 'Email' ===> "" !;;!
+
+##MATCH-LINE{98}##
+(22) 'Enter your email' ===> "" !;;!
+
+##MATCH-LINE{99}##
+(23) 'Email' ===> "" !;;!
+
+##MATCH-LINE{106}##
+(15) 'Password' ===> "" !;;!
+
+##MATCH-LINE{109}##
+(22) 'Enter your password' ===> "" !;;!
+
+##MATCH-LINE{110}##
+(23) 'Password' ===> "" !;;!
+
+##MATCH-LINE{126}##
+(28) 'Forget Password?' ===> "" !;;!
+
+##MATCH-LINE{137}##
+(20) 'Login' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/my_app.dart}##
+#----------#
+##MATCH-LINE{27}##
+(15) 'en' ===> "" !;;!
+
+##MATCH-LINE{28}##
+(15) 'ar' ===> "" !;;!
+
+##MATCH-LINE{30}##
+(21) 'en' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/no_connection_widget.dart}##
+#----------#
+##MATCH-LINE{21}##
+(10) 'No internet connection.\n Please check your Wi-Fi or mobile data.' ===> "" !;;!
+
+#----------#
+##PATH-END##
+
+##PATH-START{file:///F:/flutter%20projects/hero_location/lib/widgets/sign_up_form.dart}##
+#----------#
+##MATCH-LINE{52}##
+(54) 'Sign-up successful' ===> "" !;;!
+
+##MATCH-LINE{69}##
+(17) 'weak-password' ===> "" !;;!
+
+##MATCH-LINE{70}##
+(29) 'The password provided is too weak.' ===> "" !;;!
+
+##MATCH-LINE{72}##
+(17) 'email-already-in-use' ===> "" !;;!
+
+##MATCH-LINE{73}##
+(29) 'An account already exists for that email.' ===> "" !;;!
+
+##MATCH-LINE{75}##
+(17) 'invalid-email' ===> "" !;;!
+
+##MATCH-LINE{76}##
+(29) 'Invalid email format.' ===> "" !;;!
+
+##MATCH-LINE{78}##
+(17) 'operation-not-allowed' ===> "" !;;!
+
+##MATCH-LINE{79}##
+(29) 'Email/password sign-up is disabled.' ===> "" !;;!
+
+##MATCH-LINE{82}##
+(29) 'An error occurred: ${e.message}' ===> "" !;;!
+
+##MATCH-LINE{92}##
+(48) 'Unexpected error: $e' ===> "" !;;!
+
+##MATCH-LINE{111}##
+(15) 'Name' ===> "" !;;!
+
+##MATCH-LINE{114}##
+(22) 'Enter your Name' ===> "" !;;!
+
+##MATCH-LINE{115}##
+(23) 'Name' ===> "" !;;!
+
+##MATCH-LINE{124}##
+(15) 'Email' ===> "" !;;!
+
+##MATCH-LINE{127}##
+(22) 'Enter your Email' ===> "" !;;!
+
+##MATCH-LINE{128}##
+(23) 'Email' ===> "" !;;!
+
+##MATCH-LINE{136}##
+(15) 'phone' ===> "" !;;!
+
+##MATCH-LINE{139}##
+(22) 'Enter phone number' ===> "" !;;!
+
+##MATCH-LINE{140}##
+(23) 'Phone' ===> "" !;;!
+
+##MATCH-LINE{147}##
+(15) 'Password' ===> "" !;;!
+
+##MATCH-LINE{150}##
+(22) 'Enter your password' ===> "" !;;!
+
+##MATCH-LINE{151}##
+(23) 'Password' ===> "" !;;!
+
+##MATCH-LINE{169}##
+(15) 'Confirm Password' ===> "" !;;!
+
+##MATCH-LINE{172}##
+(22) 'Enter your password' ===> "" !;;!
+
+##MATCH-LINE{173}##
+(23) 'Password' ===> "" !;;!
+
+##MATCH-LINE{198}##
+(20) 'SignUp' ===> "" !;;!
+
+#----------#
+##PATH-END##
+

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/client_details_screen.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/custom_card.dart';
@@ -9,7 +10,14 @@ import 'package:hero_location/widgets/empty_home_screen.dart';
 
 class AgentCustomersList extends StatefulWidget {
   final String agentId;
-  const AgentCustomersList({super.key, required this.agentId});
+  final GlobalKey<ScaffoldMessengerState>?
+  scaffoldMessengerKey; // 👈 حديث: ScaffoldMessengerState
+
+  const AgentCustomersList({
+    super.key,
+    required this.agentId,
+    this.scaffoldMessengerKey, // 👈 اختياري، لو مش موجود يستخدم الـ local
+  });
 
   @override
   State<AgentCustomersList> createState() => _AgentCustomersListState();
@@ -18,6 +26,17 @@ class AgentCustomersList extends StatefulWidget {
 class _AgentCustomersListState extends State<AgentCustomersList> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  late final ScaffoldMessengerState
+  _scaffoldMessenger; // 👈 حديث: ScaffoldMessengerState reference محفوظ
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 👈 استخدم الـ GlobalKey لو موجود، وإلا الـ local
+    _scaffoldMessenger =
+        widget.scaffoldMessengerKey?.currentState ??
+        ScaffoldMessenger.of(context);
+  }
 
   @override
   void dispose() {
@@ -38,8 +57,8 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
     }
   }
 
+  // 👈 إزالة context param، واستخدام _scaffoldMessenger بس
   Future<void> _deleteCustomer(
-    BuildContext context,
     String agentId,
     String customerId,
     Map<String, dynamic> customerData,
@@ -54,7 +73,7 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
+      _scaffoldMessenger.showSnackBar(
         SnackBar(
           content: Text('Client deleted successfully'),
           duration: const Duration(seconds: 4),
@@ -73,13 +92,13 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                     .set(customerData);
                 if (mounted) setState(() {});
                 if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  _scaffoldMessenger.showSnackBar(
                     const SnackBar(content: Text('Client restored')),
                   );
                 }
               } catch (e) {
                 if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  _scaffoldMessenger.showSnackBar(
                     SnackBar(content: Text('Error restoring client: $e')),
                   );
                 }
@@ -90,9 +109,9 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
       );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error deleting client: $e')));
+        _scaffoldMessenger.showSnackBar(
+          SnackBar(content: Text('Error deleting client: $e')),
+        );
       }
     }
   }
@@ -118,7 +137,7 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                   _searchQuery = value.toLowerCase();
                 }),
                 decoration: InputDecoration(
-                  hintText: 'Search clients by name or phone...',
+                  hintText: AppLocalizations.of(context)!.searchClients,
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -170,19 +189,18 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                         name: customer['name'],
                         phone: customer['phone'],
                         onTap: () async {
-                          // 👈 إصلاح: مرر agentId دائمًا (للـ admin أو agent)
                           final result = await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => ClientDetailsScreen(
                                 clientId: customerId,
-                                agentId: widget.agentId, // 👈 مرر agentId هنا
+                                agentId: widget.agentId,
                               ),
                             ),
                           );
 
-                          if (result == true) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                          if (result == true && mounted) {
+                            _scaffoldMessenger.showSnackBar(
                               const SnackBar(
                                 content: Text('Client updated successfully'),
                               ),
@@ -196,10 +214,9 @@ class _AgentCustomersListState extends State<AgentCustomersList> {
                       }
 
                       return Dismissible(
-                        key: Key(customerId),
+                        key: ValueKey(customerId), // 👈 ValueKey للـ uniqueness
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) => _deleteCustomer(
-                          context,
                           widget.agentId,
                           customerId,
                           customer,

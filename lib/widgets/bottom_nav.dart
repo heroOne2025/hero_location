@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key, required this.selectedIndex, this.onTap});
@@ -18,11 +19,14 @@ class BottomNav extends StatelessWidget {
       selectedLabelStyle: GoogleFonts.poppins(),
       onTap: onTap,
 
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: AppLocalizations.of(context)!.home,
+        ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings_outlined),
-          label: 'settings',
+          label: AppLocalizations.of(context)!.settings,
         ),
       ],
     );

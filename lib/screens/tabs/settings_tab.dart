@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_assets.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/screens/app_language_screen.dart';
 import 'package:hero_location/screens/change_password_screen.dart';
 import 'package:hero_location/screens/edit_profile_screen.dart';
@@ -25,35 +26,35 @@ class SettingsTab extends StatelessWidget {
           SizedBox(height: 50),
           ClickedRow(
             avatar: AppAssets.profileAvatar,
-            text: 'Edit Profile',
+            text: AppLocalizations.of(context)!.editProfile,
             onTap: () {
               Navigator.pushNamed(context, EditProfileScreen.routeName);
             },
           ),
           ClickedRow(
             avatar: AppAssets.changePassword,
-            text: 'Change Password',
+            text: AppLocalizations.of(context)!.changePassword,
             onTap: () {
               Navigator.pushNamed(context, ChangePasswordScreen.routeName);
             },
           ),
           ClickedRow(
             avatar: AppAssets.changeLanguage,
-            text: 'App Language',
+            text: AppLocalizations.of(context)!.appLanguage,
             onTap: () {
               Navigator.pushNamed(context, AppLanguage.routeName);
             },
           ),
           ClickedRow(
             avatar: AppAssets.logout,
-            text: 'Logout',
+            text: AppLocalizations.of(context)!.logout,
             onTap: () async {
               AwesomeDialog(
                 context: context,
                 autoDismiss: true,
                 dialogType: DialogType.warning,
                 body: Text(
-                  'Are You sure you want logout',
+                  AppLocalizations.of(context)!.areYouSureLogout,
                   style: GoogleFonts.poppins(color: AppColors.primryColor),
                 ),
                 btnCancel: TextButton(
@@ -61,7 +62,7 @@ class SettingsTab extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Cancel',
+                    AppLocalizations.of(context)!.cancel,
                     style: GoogleFonts.poppins(color: Colors.black),
                   ),
                 ),
@@ -74,7 +75,7 @@ class SettingsTab extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'yes',
+                    AppLocalizations.of(context)!.yes,
                     style: GoogleFonts.poppins(color: Colors.black),
                   ),
                 ),

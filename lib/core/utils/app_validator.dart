@@ -1,68 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
+
 class AppValidator {
-  static String? validateName(String? value) {
+  static String? validateName(BuildContext context, String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter your name';
+      return AppLocalizations.of(context)!.pleaseEnterYourName;
     } else if (value.trim().length < 3) {
-      return 'Name must be at least 3 characters long';
+      return AppLocalizations.of(context)!.nameMustBeAtLeast3Characters;
     } else if (!RegExp(r'^[\p{L}\s]+$', unicode: true).hasMatch(value.trim())) {
-      return 'Name can only contain letters and spaces';
+      return AppLocalizations.of(context)!.nameCanOnlyContainLetters;
     }
     return null;
   }
 
-  static String? validateEmail(String? value) {
+  static String? validateEmail(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your email';
+      return AppLocalizations.of(context)!.pleaseEnterYourEmail;
     } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      return 'Enter a valid email';
+      return AppLocalizations.of(context)!.enterValidEmail;
     }
     return null;
   }
 
-  static String? validatePassword(String? value) {
+  static String? validatePassword(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your password';
+      return AppLocalizations.of(context)!.pleaseEnterYourPassword;
     } else if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return AppLocalizations.of(context)!.passwordMustBe8Characters;
     } else if (!RegExp(
       r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]+$',
     ).hasMatch(value)) {
-      return 'Password must contain at least\n one uppercase letter and one number';
+      return AppLocalizations.of(context)!.passwordMustContainUppercase;
     }
     return null;
   }
 
   static String? validateConfirmPassword(
+    BuildContext context,
     String? value,
     String originalPassword,
   ) {
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return AppLocalizations.of(context)!.pleaseConfirmYourPassword;
     } else if (value != originalPassword) {
-      return 'Passwords do not match';
+      return AppLocalizations.of(context)!.passwordsDoNotMatch;
     }
     return null;
   }
 
-  static String? validatePhone(String? value) {
+  static String? validatePhone(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your phone number';
+      return AppLocalizations.of(context)!.pleaseEnterPhoneNumber;
     } else if (!RegExp(r'^\+?\d{10,15}$').hasMatch(value)) {
-      return 'Enter a valid phone number';
+      return AppLocalizations.of(context)!.enterValidPhoneNumber;
     }
     return null;
   }
 
-  static String? validateAddress(String? value) {
+  static String? validateAddress(BuildContext context, String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter the address';
+      return AppLocalizations.of(context)!.pleaseEnterAddress;
     } else if (value.trim().length < 5) {
-      return 'Address must be at least 5 characters long';
+      return AppLocalizations.of(context)!.addressMustBe5Characters;
     } else if (!RegExp(
       r'^[\p{L}0-9\s,.\-\/]+$',
       unicode: true,
     ).hasMatch(value.trim())) {
-      return 'Address contains invalid characters';
+      return AppLocalizations.of(context)!.addressContainsInvalidCharacters;
     }
     return null;
   }
