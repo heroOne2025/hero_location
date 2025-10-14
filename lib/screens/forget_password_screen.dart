@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_assets.dart';
-import 'package:hero_location/core/utils/app_colors.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
 import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
