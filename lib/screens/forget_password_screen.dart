@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_assets.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
 import 'package:hero_location/core/utils/app_validator.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/widgets/custom_elevated_button.dart';
 import 'package:hero_location/widgets/custom_text_form_field.dart';
 
@@ -46,7 +47,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 Center(
                   child: Text(
-                    "Forget Your Password?",
+                    AppLocalizations.of(context)!.forgetYourPassword,
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -54,18 +55,22 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                Text('Email', style: GoogleFonts.poppins()),
+                Text(
+                  AppLocalizations.of(context)!.email,
+                  style: GoogleFonts.poppins(),
+                ),
                 SizedBox(height: 8.0),
                 CustomTextFormField(
-                  hintText: 'Enter your email',
-                  labelText: 'Email',
+                  hintText: AppLocalizations.of(context)!.enterYourEmail,
+                  labelText: AppLocalizations.of(context)!.email,
                   keyboardType: TextInputType.emailAddress,
                   controller: emailControler,
-                  validator: (value) => AppValidator.validateEmail(value),
+                  validator: (value) =>
+                      AppValidator.validateEmail(context, value),
                 ),
                 SizedBox(height: 30.0),
                 CustomElevatedButton(
-                  textOnButton: 'Send',
+                  textOnButton: AppLocalizations.of(context)!.send,
                   onPressed: () async {
                     if (emailControler.text.isNotEmpty) {
                       try {
@@ -75,8 +80,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         if (mounted) {
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Password reset email sent.'),
+                            SnackBar(
+                              content: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.passwordResetEmailSent,
+                              ),
                             ),
                           );
                         }
@@ -85,10 +94,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           String errorMessage;
                           switch (e.code) {
                             case 'invalid-email':
-                              errorMessage = 'Invalid email format.';
+                              errorMessage = AppLocalizations.of(
+                                context,
+                              )!.invalidEmailFormat;
                               break;
                             case 'user-not-found':
-                              errorMessage = 'No user found for that email.';
+                              errorMessage = AppLocalizations.of(
+                                context,
+                              )!.userNotFound;
                               break;
                             default:
                               errorMessage = 'An error occurred: ${e.message}';

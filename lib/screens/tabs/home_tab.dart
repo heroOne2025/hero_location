@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 import 'package:hero_location/services/firestore_service.dart';
 import 'package:hero_location/widgets/admin_users_list.dart';
 import 'package:hero_location/widgets/agent_customers_list.dart';
@@ -11,7 +12,10 @@ import 'package:hero_location/widgets/empty_home_screen.dart';
 import 'package:hero_location/widgets/no_connection_widget.dart';
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({super.key});
+  final GlobalKey<ScaffoldMessengerState>?
+  scaffoldMessengerKey; // 👈 حديث: ScaffoldMessengerState
+
+  const HomeTab({super.key, this.scaffoldMessengerKey});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
@@ -51,7 +55,7 @@ class _HomeTabState extends State<HomeTab> {
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
-              'Something went wrong',
+              AppLocalizations.of(context)!.somethingWentWrong,
               style: GoogleFonts.poppins(fontSize: 18),
             ),
           );
@@ -63,9 +67,14 @@ class _HomeTabState extends State<HomeTab> {
         final role = userData['role'] ?? 'agent';
 
         if (role == 'admin') {
-          return const AdminUsersList();
+          return AdminUsersList(
+            scaffoldMessengerKey: widget.scaffoldMessengerKey, // 👈 مرر الـ key
+          );
         } else {
-          return AgentCustomersList(agentId: currentUser.uid);
+          return AgentCustomersList(
+            agentId: currentUser.uid,
+            scaffoldMessengerKey: widget.scaffoldMessengerKey, // 👈 مرر الـ key
+          );
         }
       },
     );

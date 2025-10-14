@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hero_location/core/utils/app_colors.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
+import 'package:hero_location/provider/chanage_language_provider.dart';
+import 'package:provider/provider.dart';
 
 class AppLanguage extends StatefulWidget {
   static const routeName = '/app-language';
@@ -11,17 +14,18 @@ class AppLanguage extends StatefulWidget {
 }
 
 class _AppLanguageState extends State<AppLanguage> {
-  String language = 'English';
+  String language = 'en';
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ChanageLanguageProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('App Language')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appLanguage)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
-              'Choose your language ',
+              AppLocalizations.of(context)!.chooseYourLanguage,
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -34,20 +38,27 @@ class _AppLanguageState extends State<AppLanguage> {
                 setState(() {
                   language = val!;
                 });
+                provider.changeLanguge(val!);
               },
               child: Column(
                 children: [
                   RadioListTile<String>(
                     activeColor: AppColors.primryColor,
-                    value: 'English',
-                    title: Text('English', style: GoogleFonts.poppins()),
-                    selected: language == 'English',
+                    value: 'en',
+                    title: Text(
+                      AppLocalizations.of(context)!.english,
+                      style: GoogleFonts.poppins(),
+                    ),
+                    selected: language == 'en',
                   ),
                   RadioListTile<String>(
                     activeColor: AppColors.primryColor,
-                    value: 'Arabic',
-                    title: Text('Arabic', style: GoogleFonts.poppins()),
-                    selected: language == 'Arabic',
+                    value: 'ar',
+                    title: Text(
+                      AppLocalizations.of(context)!.arabic,
+                      style: GoogleFonts.poppins(),
+                    ),
+                    selected: language == 'ar',
                   ),
                 ],
               ),

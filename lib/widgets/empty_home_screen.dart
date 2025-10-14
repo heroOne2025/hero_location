@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hero_location/l10n/app_localizations.dart';
 
 class EmptyHomeScreen extends StatelessWidget {
   const EmptyHomeScreen({super.key});
@@ -19,7 +20,7 @@ class EmptyHomeScreen extends StatelessWidget {
           ),
 
           Text(
-            'No clints yet',
+            AppLocalizations.of(context)!.noClientsYet,
             textAlign: TextAlign.center,
             style: GoogleFonts.poppins(
               fontSize: 20,
